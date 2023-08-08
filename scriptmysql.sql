@@ -56,3 +56,43 @@ foreign key (idDireccion) references direccion(idDireccion) ,
 foreign key (idPuesto) references puesto(idPuesto) ,
 foreign key (idCorreo) references correo_electronico(idCorreo) on delete cascade
 );
+
+--Segunda parte de creacion de tablas
+
+ALTER TABLE EMPRESA CHANGE idUsuario idEmpresa int;
+
+CREATE TABLE PROVEEDOR(
+idProveedor int auto_increment primary key ,
+idEmpresa int not null ,
+sitioWeb varchar(100) ,
+contactoProveedor varchar(50),
+idCorreo varchar(500) unique,
+fechaCreacion date not null,
+foreign key (idEmpresa) references Empresa(idEmpresa) ,
+foreign key (idCorreo) references correo_electronico(idCorreo) on delete cascade
+);
+
+CREATE TABLE FACTURAS(
+idOperacionf int primary key ,
+factura varchar(150) NOT NULL,
+fechaCaptura date not null,
+idProveedor int ,
+monto float not null,
+foreign key (idProveedor) references PROVEEDOR(idProveedor) on delete cascade
+);
+
+CREATE TABLE MARCASPRODUCTO(
+idMarcaProducto varchar(10) primary key,
+nombreMarca varchar(100)
+);
+
+CREATE TABLE PRODUCTO(
+idProducto varchar(10) primary key,
+idMarcaProducto varchar(10) ,
+unidadProducto varchar(10) ,
+precioVenta float not null,
+precioCompra float not null,
+IVA varchar(10),
+nivelOrden varchar(10),
+foreign key (idMarcaProducto) references MARCASPRODUCTO(idMarcaProducto) on delete cascade
+);

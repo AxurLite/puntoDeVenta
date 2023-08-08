@@ -1,0 +1,71 @@
+[33mcommit 902ae908a151c5ec18fcb9f8dffb49341015243d[m[33m ([m[1;36mHEAD -> [m[1;32mpuntoDeVenta-E[m[33m, [m[1;31mventa/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Belysning <emanuel.araujo.espionsa17@gmail.com>
+Date:   Sun Aug 6 18:11:45 2023 -0600
+
+    Creacion de base de datos ,usuario y tablas de direccion ,empresa,usuario ,correo electronico y puesto
+
+[1mdiff --git a/scriptmysql.sql b/scriptmysql.sql[m
+[1mnew file mode 100644[m
+[1mindex 0000000..40f6174[m
+[1m--- /dev/null[m
+[1m+++ b/scriptmysql.sql[m
+[36m@@ -0,0 +1,58 @@[m
+[32m+[m[32mCREATE DATABASE B_ABARROTES;[m
+[32m+[m[32mCREATE USER P_VENTA@localhost IDENTIFIED BY 'venta1234';[m
+[32m+[m[32mGRANT CREATE ON B_ABARROTES.* TO P_VENTA@localhost;[m
+[32m+[m[32mFLUSH privileges;[m
+[32m+[m[32mSHOW GRANTS FOR P_VENTA@localhost;[m
+[32m+[m[32mGRANT CREATE ON B_ABARROTES.* TO P_VENTA@localhost;[m
+[32m+[m[32mGRANT ALL privileges ON B_ABARROTES.* TO P_VENTA@localhost;[m
+[32m+[m
+[32m+[m[32mCREATE TABLE DIRECCION ([m
+[32m+[m[32midDireccion int unsigned auto_increment primary key,[m
+[32m+[m[32mcalleNumero varchar(150),[m
+[32m+[m[32mcolonia varchar(80),[m
+[32m+[m[32mcodigoPostal varchar(10),[m
+[32m+[m[32mmunicipioAlcaldia varchar(80),[m
+[32m+[m[32mestado varchar(80),[m
+[32m+[m[32mpais varchar(50));[m
+[32m+[m
+[32m+[m[32mCREATE TABLE CORREO_ELECTRONICO ([m
+[32m+[m[32midCorreo varchar(500) primary key,[m
+[32m+[m[32mcorreoElectronico varchar(150) not null,[m
+[32m+[m[32mfechaCreacion date not null,[m
+[32m+[m[32mfechaModificacion date not null);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE EMPRESA([m
+[32m+[m[32midUsuario int not null primary key comment 'SSNN',[m
+[32m+[m[32mnombreEmpresa varchar(150) not null,[m
+[32m+[m[32mid_Direccion int unsigned ,[m
+[32m+[m[32mnumTelefonico int,[m
+[32m+[m[32mid_Correo varchar(500) unique,[m
+[32m+[m[32mRFC varchar(30) ,[m
+[32m+[m[32msitioWeb varchar(100) ,[m
+[32m+[m[32mfechaCreacion date not null,[m
+[32m+[m[32mforeign key (id_Direccion) references direccion(idDireccion) ,[m
+[32m+[m[32mforeign key (id_Correo) references correo_electronico(idCorreo) on delete cascade[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE PUESTO([m
+[32m+[m[32midPuesto varchar(10) not null primary key ,[m
+[32m+[m[32mnombrePuesto varchar(150) not null,[m
+[32m+[m[32mdescripcionPuesto varchar(250) ,[m
+[32m+[m[32mfechaCreacion date not null[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE USUARIO([m
+[32m+[m[32midUsuario int not null primary key comment 'SSNN',[m
+[32m+[m[32mnombreUsuario varchar(150) not null,[m
+[32m+[m[32mnombreCompleto varchar(80) not null,[m
+[32m+[m[32mapellidoMaterno varchar(80) ,[m
+[32m+[m[32mapellidoPaternoo varchar(80) ,[m
+[32m+[m[32mcontrasena varchar(80) unique,[m
+[32m+[m[32midDireccion int unsigned ,[m
+[32m+[m[32midCorreo varchar(500) unique,[m
+[32m+[m[32midPuesto varchar(10) not null ,[m
+[32m+[m[32mfechaCreacion date not null,[m
+[32m+[m[32mforeign key (idDireccion) references direccion(idDireccion) ,[m
+[32m+[m[32mforeign key (idPuesto) references puesto(idPuesto) ,[m
+[32m+[m[32mforeign key (idCorreo) references correo_electronico(idCorreo) on delete cascade[m
+[32m+[m[32m);[m
+\ No newline at end of file[m
