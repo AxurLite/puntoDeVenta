@@ -1,0 +1,21 @@
+:root{
+    --primario: #f57c00;
+    --blanco: #ffffff;
+}
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+body{
+    font-size: 1.6rem;
+
+}
+
+*,*:before,*:after{
+    box-sizing: inherit;
+}
+
+h1{
+    text-align: center;
+    background-color: #0097a7;
+}
