@@ -96,3 +96,55 @@ IVA varchar(10),
 nivelOrden varchar(10),
 foreign key (idMarcaProducto) references MARCASPRODUCTO(idMarcaProducto) on delete cascade
 );
+
+--Creacion de tablas.
+
+CREATE TABLE ADMINPRODUCTOS(
+idMovimiento varchar(10) primary key,
+idProducto varchar(10) not null,
+fechaMovimiento date not null,
+tipoTransaccion varchar(50) not null,
+cantidad int ,
+precioTransaccion float not null,
+idOperacionf int ,
+IVA varchar(10),
+existenciasProductos int not null,
+foreign key (idOperacionf) references FACTURAS(idOperacionf),
+foreign key (idProducto) references PRODUCTO(idProducto) on delete cascade
+);
+
+CREATE TABLE PVENTA(
+idPuntoVenta int primary key,
+nombrePuntoventa varchar(100) not null,
+fechaCreacion date not null
+);
+
+CREATE TABLE TICKET(
+idTicket varchar(150) primary key,
+numTicket varchar(150) not null,
+fechaCreacion date not null,
+idPuntoVenta int ,
+montoTotal float not null,
+idUsuario int not null ,
+foreign key (idPuntoVenta) references PVENTA(idPuntoVenta),
+foreign key (idUsuario) references USUARIO(idUsuario)
+);
+
+
+CREATE TABLE PROVEDORESPRODUCTOS(
+idProveedor int primary key,
+idProducto varchar(10) not null,
+foreign key (idProveedor) references PROVEEDOR(idProveedor),
+foreign key (idProducto) references PRODUCTO(idProducto)
+);
+
+CREATE TABLE DVENTA(
+idTicket varchar(150) primary key,
+idProducto varchar(10) not null,
+precioProducto float ,
+descProducto float ,
+IVA varchar(10),
+descIVA float,
+foreign key (idTicket) references TICKET(idTicket),
+foreign key (idProducto) references PRODUCTO(idProducto)
+);
