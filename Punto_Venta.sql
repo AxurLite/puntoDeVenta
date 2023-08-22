@@ -7,23 +7,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-SHOW WARNINGS;
 -- -----------------------------------------------------
 -- Schema b_abarrotes
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `b_abarrotes` ;
 
 -- -----------------------------------------------------
 -- Schema b_abarrotes
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `b_abarrotes` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-SHOW WARNINGS;
 USE `b_abarrotes` ;
 
 -- -----------------------------------------------------
--- Table `direccion`
+-- Table `b_abarrotes`.`direccion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `direccion` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`direccion` (
   `idDireccion` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `calleNumero` VARCHAR(150) NULL DEFAULT NULL,
   `colonia` VARCHAR(80) NULL DEFAULT NULL,
@@ -37,12 +34,11 @@ AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `correo_electronico`
+-- Table `b_abarrotes`.`correo_electronico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `correo_electronico` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`correo_electronico` (
   `idCorreo` VARCHAR(500) NOT NULL,
   `correoElectronico` VARCHAR(150) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
@@ -52,12 +48,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `empresa`
+-- Table `b_abarrotes`.`empresa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `empresa` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`empresa` (
   `idEmpresa` INT NOT NULL,
   `nombreEmpresa` VARCHAR(150) NOT NULL,
   `id_Direccion` INT UNSIGNED NULL DEFAULT NULL,
@@ -66,50 +61,74 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   `RFC` VARCHAR(30) NULL DEFAULT NULL,
   `sitioWeb` VARCHAR(100) NULL DEFAULT NULL,
   `fechaCreacion` DATE NOT NULL,
-  PRIMARY KEY (`idEmpresa`))
+  PRIMARY KEY (`idEmpresa`),
+  INDEX `id_Direccion` (`id_Direccion` ASC) VISIBLE,
+  INDEX `id_Correo` (`id_Correo` ASC) VISIBLE,
+  CONSTRAINT `empresa_ibfk_1`
+    FOREIGN KEY (`id_Direccion`)
+    REFERENCES `b_abarrotes`.`direccion` (`idDireccion`),
+  CONSTRAINT `empresa_ibfk_2`
+    FOREIGN KEY (`id_Correo`)
+    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `proveedor`
+-- Table `b_abarrotes`.`proveedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `proveedor` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`proveedor` (
   `idProveedor` INT NOT NULL AUTO_INCREMENT,
   `idEmpresa` INT NOT NULL,
   `sitioWeb` VARCHAR(100) NULL DEFAULT NULL,
   `contactoProveedor` VARCHAR(50) NULL DEFAULT NULL,
   `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
   `fechaCreacion` DATE NOT NULL,
-  PRIMARY KEY (`idProveedor`))
+  PRIMARY KEY (`idProveedor`),
+  INDEX `idEmpresa` (`idEmpresa` ASC) VISIBLE,
+  INDEX `idCorreo` (`idCorreo` ASC) VISIBLE,
+  CONSTRAINT `proveedor_ibfk_1`
+    FOREIGN KEY (`idEmpresa`)
+    REFERENCES `b_abarrotes`.`empresa` (`idEmpresa`),
+  CONSTRAINT `proveedor_ibfk_2`
+    FOREIGN KEY (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    ON DELETE CASCADE,
+  CONSTRAINT `proveedor_ibfk_3`
+    FOREIGN KEY (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `facturas`
+-- Table `b_abarrotes`.`facturas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `facturas` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`facturas` (
   `idOperacionf` INT NOT NULL,
   `factura` VARCHAR(150) NOT NULL,
   `fechaCaptura` DATE NOT NULL,
   `idProveedor` INT NULL DEFAULT NULL,
   `monto` FLOAT NOT NULL,
-  PRIMARY KEY (`idOperacionf`))
+  PRIMARY KEY (`idOperacionf`),
+  INDEX `idProveedor` (`idProveedor` ASC) VISIBLE,
+  CONSTRAINT `facturas_ibfk_1`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `b_abarrotes`.`proveedor` (`idProveedor`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `marcasproducto`
+-- Table `b_abarrotes`.`marcasproducto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `marcasproducto` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`marcasproducto` (
   `idMarcaProducto` VARCHAR(10) NOT NULL,
   `nombreMarca` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`idMarcaProducto`))
@@ -117,12 +136,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `producto`
+-- Table `b_abarrotes`.`producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `producto` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`producto` (
   `idProducto` VARCHAR(10) NOT NULL,
   `idMarcaProducto` VARCHAR(10) NULL DEFAULT NULL,
   `unidadProducto` VARCHAR(10) NULL DEFAULT NULL,
@@ -130,17 +148,21 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `precioCompra` FLOAT NOT NULL,
   `IVA` VARCHAR(10) NULL DEFAULT NULL,
   `nivelOrden` VARCHAR(10) NULL DEFAULT NULL,
-  PRIMARY KEY (`idProducto`))
+  PRIMARY KEY (`idProducto`),
+  INDEX `idMarcaProducto` (`idMarcaProducto` ASC) VISIBLE,
+  CONSTRAINT `producto_ibfk_1`
+    FOREIGN KEY (`idMarcaProducto`)
+    REFERENCES `b_abarrotes`.`marcasproducto` (`idMarcaProducto`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `adminproductos`
+-- Table `b_abarrotes`.`adminproductos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `adminproductos` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`adminproductos` (
   `idMovimiento` VARCHAR(10) NOT NULL,
   `idProducto` VARCHAR(10) NOT NULL,
   `fechaMovimiento` DATE NOT NULL,
@@ -150,17 +172,29 @@ CREATE TABLE IF NOT EXISTS `adminproductos` (
   `idOperacionf` INT NULL DEFAULT NULL,
   `IVA` VARCHAR(10) NULL DEFAULT NULL,
   `existenciasProductos` INT NOT NULL,
-  PRIMARY KEY (`idMovimiento`))
+  PRIMARY KEY (`idMovimiento`),
+  INDEX `idOperacionf` (`idOperacionf` ASC) VISIBLE,
+  INDEX `idProducto` (`idProducto` ASC) VISIBLE,
+  CONSTRAINT `adminproductos_ibfk_1`
+    FOREIGN KEY (`idOperacionf`)
+    REFERENCES `b_abarrotes`.`facturas` (`idOperacionf`),
+  CONSTRAINT `adminproductos_ibfk_2`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `b_abarrotes`.`producto` (`idProducto`)
+    ON DELETE CASCADE,
+  CONSTRAINT `adminproductos_ibfk_3`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `b_abarrotes`.`producto` (`idProducto`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `pventa`
+-- Table `b_abarrotes`.`pventa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pventa` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`pventa` (
   `idPuntoVenta` INT NOT NULL,
   `nombrePuntoventa` VARCHAR(100) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
@@ -169,12 +203,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `puesto`
+-- Table `b_abarrotes`.`puesto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `puesto` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`puesto` (
   `idPuesto` VARCHAR(10) NOT NULL,
   `nombrePuesto` VARCHAR(150) NOT NULL,
   `descripcionPuesto` VARCHAR(250) NULL DEFAULT NULL,
@@ -184,12 +217,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `usuario`
+-- Table `b_abarrotes`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `usuario` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
   `idUsuario` INT NOT NULL,
   `nombreUsuario` VARCHAR(150) NOT NULL,
   `nombreCompleto` VARCHAR(80) NOT NULL,
@@ -200,62 +232,97 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
   `idPuesto` VARCHAR(10) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
-  PRIMARY KEY (`idUsuario`))
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE INDEX `contrasena` (`contrasena` ASC) VISIBLE,
+  INDEX `idDireccion` (`idDireccion` ASC) VISIBLE,
+  INDEX `idPuesto` (`idPuesto` ASC) VISIBLE,
+  INDEX `idCorreo` (`idCorreo` ASC) VISIBLE,
+  CONSTRAINT `usuario_ibfk_1`
+    FOREIGN KEY (`idDireccion`)
+    REFERENCES `b_abarrotes`.`direccion` (`idDireccion`),
+  CONSTRAINT `usuario_ibfk_2`
+    FOREIGN KEY (`idPuesto`)
+    REFERENCES `b_abarrotes`.`puesto` (`idPuesto`),
+  CONSTRAINT `usuario_ibfk_3`
+    FOREIGN KEY (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
-CREATE UNIQUE INDEX `contrasena` ON `usuario` (`contrasena` ASC) VISIBLE;
-
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `ticket`
+-- Table `b_abarrotes`.`ticket`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ticket` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`ticket` (
   `idTicket` VARCHAR(150) NOT NULL,
   `numTicket` VARCHAR(150) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
   `idPuntoVenta` INT NULL DEFAULT NULL,
   `montoTotal` FLOAT NOT NULL,
   `idUsuario` INT NOT NULL,
-  PRIMARY KEY (`idTicket`))
+  PRIMARY KEY (`idTicket`),
+  INDEX `idPuntoVenta` (`idPuntoVenta` ASC) VISIBLE,
+  INDEX `idUsuario` (`idUsuario` ASC) VISIBLE,
+  CONSTRAINT `ticket_ibfk_1`
+    FOREIGN KEY (`idPuntoVenta`)
+    REFERENCES `b_abarrotes`.`pventa` (`idPuntoVenta`),
+  CONSTRAINT `ticket_ibfk_2`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `b_abarrotes`.`usuario` (`idUsuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `dventa`
+-- Table `b_abarrotes`.`dventa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dventa` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`dventa` (
   `idTicket` VARCHAR(150) NOT NULL,
   `idProducto` VARCHAR(10) NOT NULL,
   `precioProducto` FLOAT NULL DEFAULT NULL,
   `descProducto` FLOAT NULL DEFAULT NULL,
   `IVA` VARCHAR(10) NULL DEFAULT NULL,
   `descIVA` FLOAT NULL DEFAULT NULL,
-  PRIMARY KEY (`idTicket`))
+  PRIMARY KEY (`idTicket`),
+  INDEX `idProducto` (`idProducto` ASC) VISIBLE,
+  CONSTRAINT `dventa_ibfk_1`
+    FOREIGN KEY (`idTicket`)
+    REFERENCES `b_abarrotes`.`ticket` (`idTicket`),
+  CONSTRAINT `dventa_ibfk_2`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `b_abarrotes`.`producto` (`idProducto`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `provedoresproductos`
+-- Table `b_abarrotes`.`provedoresproductos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `provedoresproductos` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`provedoresproductos` (
   `idProveedor` INT NOT NULL,
   `idProducto` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`idProveedor`))
+  PRIMARY KEY (`idProveedor`),
+  INDEX `idProducto` (`idProducto` ASC) VISIBLE,
+  CONSTRAINT `provedoresproductos_ibfk_1`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `b_abarrotes`.`proveedor` (`idProveedor`),
+  CONSTRAINT `provedoresproductos_ibfk_2`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `b_abarrotes`.`producto` (`idProducto`),
+  CONSTRAINT `provedoresproductos_ibfk_3`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `b_abarrotes`.`proveedor` (`idProveedor`),
+  CONSTRAINT `provedoresproductos_ibfk_4`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `b_abarrotes`.`producto` (`idProducto`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-SHOW WARNINGS;
 USE `b_abarrotes` ;
 
 -- -----------------------------------------------------
@@ -304,7 +371,47 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- procedure AgregarUsuarioconID
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `b_abarrotes`$$
+CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `AgregarUsuarioconID`(
+    IN nombreUsuario1 varchar(150),
+	IN nombreCompleto1 varchar(80),
+	IN apellidoMaterno1 varchar(80),
+	IN apellidoPaterno1 varchar(80),
+    IN contrasena1 varchar(80),
+    IN calleNumero1 varchar(150),
+	IN colonia1 varchar(80),
+	IN codigoPostal1 varchar(10),
+	IN municipioAlcaldia1 varchar(80),
+	IN estado1 varchar(80),
+	IN pais1 varchar(50),
+    IN idpuesto1 varchar(10),
+    IN correoElectronico1 varchar(150)
+)
+BEGIN 
+	DECLARE id_direccion1 INT;
+    
+    DECLARE idCorreo1 VARCHAR(150);  
+	INSERT INTO DIRECCION (calleNumero,colonia,codigoPostal,municipioAlcaldia,estado,pais)
+	VALUES (calleNumero1,colonia1,codigoPostal1,municipioAlcaldia1,estado1,pais1);
+    
+    set id_direccion1 = LAST_INSERT_ID();
+    
+    set idCorreo1 = CONCAT('C',id_direccion1);
+    
+    INSERT INTO CORREO_ELECTRONICO (idCorreo,correoElectronico,fechaCreacion,fechaModificacion)
+	VALUES (idCorreo1,correoElectronico1,SYSDATE(),SYSDATE());    
+    INSERT INTO USUARIO (nombreUsuario,nombreCompleto,apellidoMaterno,apellidoPaterno,contrasena,idDireccion
+    ,idCorreo,idPuesto,fechaCreacion) VALUES (nombreUsuario1,nombreCompleto1,apellidoMaterno1,apellidoPaterno1,contrasena1,id_direccion1,
+    idCorreo1,idpuesto1,sysdate());
+END$$
+
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- procedure EliminarUsuario
@@ -323,7 +430,6 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
