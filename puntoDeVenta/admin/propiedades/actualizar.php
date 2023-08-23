@@ -1,10 +1,9 @@
-<?php
-require_once '../../includes/funciones.php';
-incluirTemplate("headerIframe");
-?>
+
 
 <main>
     <h1>Actualizar</h1>
+
+
     <form>
 
         <fieldset>
@@ -33,5 +32,3 @@ incluirTemplate("headerIframe");
         <input type="submit" value="Crear usuario" >
     </form>
 </main>
-</body>
-</html>

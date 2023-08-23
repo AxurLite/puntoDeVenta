@@ -9,7 +9,6 @@ html{
 body{
     font-size: 1.6rem;
     background-image:linear-gradient(to top, #DFE9F3 0%, var(--blanco));
-
 }
 
 *,*:before,*:after{
