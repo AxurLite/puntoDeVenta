@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`direccion` (
   `pais` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`idDireccion`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -222,7 +222,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `b_abarrotes`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
-  `idUsuario` INT NOT NULL,
+  `idUsuario` INT NOT NULL DEFAULT '1',
   `nombreUsuario` VARCHAR(150) NOT NULL,
   `nombreCompleto` VARCHAR(80) NOT NULL,
   `apellidoMaterno` VARCHAR(80) NULL DEFAULT NULL,
@@ -232,7 +232,10 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
   `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
   `idPuesto` VARCHAR(10) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
+  `fecha_nacimiento` DATE NULL DEFAULT NULL,
+  `telefono` VARCHAR(15) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`),
+  UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario` ASC) VISIBLE,
   UNIQUE INDEX `contrasena` (`contrasena` ASC) VISIBLE,
   INDEX `idDireccion` (`idDireccion` ASC) VISIBLE,
   INDEX `idPuesto` (`idPuesto` ASC) VISIBLE,
@@ -414,6 +417,49 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
+-- procedure AgregarUsuarioconIDV2
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `b_abarrotes`$$
+CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `AgregarUsuarioconIDV2`(
+    IN nombreUsuario1 varchar(150),
+	IN nombreCompleto1 varchar(80),
+	IN apellidoMaterno1 varchar(80),
+	IN apellidoPaterno1 varchar(80),
+    IN contrasena1 varchar(80),
+    IN calleNumero1 varchar(150),
+	IN colonia1 varchar(80),
+	IN codigoPostal1 varchar(10),
+	IN municipioAlcaldia1 varchar(80),
+	IN estado1 varchar(80),
+	IN pais1 varchar(50),
+    IN idpuesto1 varchar(10),
+    IN correoElectronico1 varchar(150),
+    IN fecha_nacimiento1 date ,
+    IN telefono1 varchar(15)
+)
+BEGIN 
+	DECLARE id_direccion1 INT;
+    
+    DECLARE idCorreo1 VARCHAR(150);  
+	INSERT INTO DIRECCION (calleNumero,colonia,codigoPostal,municipioAlcaldia,estado,pais)
+	VALUES (calleNumero1,colonia1,codigoPostal1,municipioAlcaldia1,estado1,pais1);
+    
+    set id_direccion1 = LAST_INSERT_ID();
+    
+    set idCorreo1 = CONCAT('C',id_direccion1);
+    
+    INSERT INTO CORREO_ELECTRONICO (idCorreo,correoElectronico,fechaCreacion,fechaModificacion)
+	VALUES (idCorreo1,correoElectronico1,SYSDATE(),SYSDATE());    
+    INSERT INTO USUARIO (nombreUsuario,nombreCompleto,apellidoMaterno,apellidoPaterno,contrasena,idDireccion
+    ,idCorreo,idPuesto,fechaCreacion,fecha_nacimiento,telefono) VALUES (nombreUsuario1,nombreCompleto1,apellidoMaterno1,apellidoPaterno1,contrasena1,id_direccion1,
+    idCorreo1,idpuesto1,sysdate(),fecha_nacimiento1,telefono1);
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- procedure EliminarUsuario
 -- -----------------------------------------------------
 
@@ -423,9 +469,11 @@ CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `EliminarUsuario`(
     IN idUsuario1 int )
 BEGIN 
 	DECLARE idCorreo1 VARCHAR(500);
+    DECLARE idDireccion1 int;
+    select idCorreo,idDireccion into idCorreo1,idDireccion1
+	from usuario where idUsuario = idUsuario1;
     delete from usuario where idUsuario = idUsuario1;
-    delete from direccion where idDireccion = idUsuario1;
-    set idCorreo1 = CONCAT('C',idUsuario1);
+    delete from direccion where idDireccion = idDireccion1;
     delete from correo_electronico where idCorreo = idCorreo1;
 END$$
 
