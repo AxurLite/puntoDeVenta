@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`direccion` (
   `pais` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`idDireccion`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 17
+AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -452,8 +452,8 @@ BEGIN
     
     INSERT INTO CORREO_ELECTRONICO (idCorreo,correoElectronico,fechaCreacion,fechaModificacion)
 	VALUES (idCorreo1,correoElectronico1,SYSDATE(),SYSDATE());    
-    INSERT INTO USUARIO (nombreUsuario,nombreCompleto,apellidoMaterno,apellidoPaterno,contrasena,idDireccion
-    ,idCorreo,idPuesto,fechaCreacion,fecha_nacimiento,telefono) VALUES (nombreUsuario1,nombreCompleto1,apellidoMaterno1,apellidoPaterno1,contrasena1,id_direccion1,
+    INSERT INTO USUARIO (idUsuario,nombreUsuario,nombreCompleto,apellidoMaterno,apellidoPaterno,contrasena,idDireccion
+    ,idCorreo,idPuesto,fechaCreacion,fecha_nacimiento,telefono) VALUES (id_direccion1,nombreUsuario1,nombreCompleto1,apellidoMaterno1,apellidoPaterno1,contrasena1,id_direccion1,
     idCorreo1,idpuesto1,sysdate(),fecha_nacimiento1,telefono1);
 END$$
 
