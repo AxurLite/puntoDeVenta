@@ -1,14 +1,18 @@
 <?php
 
-function conectarDB(): mysqli
+class connector
 {
-    $db = mysqli_connect('localhost', 'P_VENTA', 'venta1234', 'B_ABARROTES');
+    function conectarDB(): mysqli
+    {
+        $db = mysqli_connect('localhost', 'P_VENTA', 'venta1234', 'B_ABARROTES');
 
-    if (!$db) {
-        echo "No se pudo realizar la conexion a la base de datos";
-        exit;
+        if (!$db) {
+            echo "No se pudo realizar la conexión a la base de datos";
+            exit;
+        }
+
+        return $db;
     }
-
-    return $db;
 }
+
 

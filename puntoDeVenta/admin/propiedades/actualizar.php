@@ -1,34 +1,62 @@
+<?php
+require_once '../../includes/funciones.php';
+require_once INCLUDES_URL . "/config/database.php";
+incluirTemplate("headerIframe");
+incluirTemplate("error");
+//Conexion a base de datos
+$conexion = new connector;
+$db = $conexion->conectarDB(); // Obtener la conexión a la base de datos
+
+$queryGetVendedores = "SELECT * FROM puesto";
+$result = mysqli_query($db, $queryGetVendedores);
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nombreUsuario = $_POST["nombreUsuario"];
+    $nombreCompleto = $_POST["nombreCompleto"];
+    $apellidoPaterno = $_POST["apellidoPaterno"];
+    $apellidoMaterno = $_POST["apellidoMaterno"];
+    $correoElectronico = $_POST["correoElectronico"];
+    $idPuesto = $_POST["idPuesto"];
+    $errors = [];
+
+
+    $query = "SELECT * FROM usuario WHERE nombreUsuario LIKE '$nombreUsuario' 
+                         OR nombreCompleto LIKE '$nombreCompleto' 
+                         OR apellidoPaterno LIKE '$apellidoPaterno'
+                         OR apellidoMaterno LIKE  '$apellidoMaterno'";
+
+    var_dump(mysqli_fetch_assoc(mysqli_query($db, $query)));
+
+}
+
+
+?>
 
 
 <main>
-    <h1>Actualizar</h1>
+    <table class="usuarios"
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Usuario</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
 
-
-    <form>
-
-        <fieldset>
-            <legend>Información usuario</legend>
-
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" placeholder="Juan">
-
-            <label for="apellidoPaterno">Apellido paterno:</label>
-            <input type="text" id="apellidoPaterno" placeholder="Roblez">
-
-            <label for="apellidoMaterno">Apellido materno:</label>
-            <input type="text" id="apellidoMaterno" placeholder="Peréz">
-
-            <label for="rol">Rol:</label>
-            <select>
-                <option value="1">Administrador</option>
-                <option value="2">Gerente</option>
-                <option value="3">Vendedor</option>
-            </select>
-
-            <label for="imagen">Imagen:</label>
-            <input type="file" id="imagen" accept="image/jpeg , image/png">
-
-        </fieldset>
-        <input type="submit" value="Crear usuario" >
-    </form>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>Juan</td>
+        <td>Ortega Ramirez</td>
+        <td>JUANRAM</td>
+        <td>JUANRAM@GMAI.COM</td>
+        <td>
+            <a href="#" class="boton-amarillo">Actualizar</a>
+            <a href="#" class="boton-rojo">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
 </main>

@@ -1,7 +1,7 @@
 
 <div class="texto">
     <nav>
-        <a href="../index.php" target="Inicio" id="link">Inicio</a>
+        <a href="../inicio/avipro.php" target="Inicio" id="link">Inicio</a>
         <div class="secciones" id="menu">
             <div class="Sub">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -14,8 +14,8 @@
             </div>
             <div class="Despegable" id="des">
                 <a href="../admin/propiedades/crear.php" target="Inicio">Crear Usuarios</a>
-                <a href="../admin/propiedades/borrar.php" target="Inicio">Baja de Usuarios</a>
-                <a href="../admin/propiedades/actualizar.php" target="Inicio">Config global</a>
+                <a href="../admin/propiedades/actualizar.php" target="Inicio">Baja de Usuarios</a>
+                <a href="../admin/propiedades/index.php" target="Inicio">Config global</a>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
 
     <span>
         <main>
-            <iframe src="../index.php" name="Inicio"></iframe>
+            <iframe src="../inicio/avipro.php" name="Inicio"></iframe>
         </main>
     </span>
 </div>

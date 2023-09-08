@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punto de Venta</title>
-    <link href="../css/normalize.css" rel="stylesheet">
-    <link rel="preload" href="../css/principal/principal.css" as="style"/>
-    <link href="../css/principal/principal.css" rel="stylesheet"/>
+    <link href="<?php echo BASE_URL; ?>css/normalize.css" rel="stylesheet">
+    <link rel="preload" href="<?php echo BASE_URL; ?>css/principal/principal.css" as="style"/>
+    <link href="<?php echo BASE_URL; ?>css/principal/principal.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -31,7 +31,7 @@
         </svg>
         <div class="CerrarHijo" id="des5">
             <div class="Foto">
-                <img src="../includes/imagenes/Aleph.jpg">
+                <img src="<?php echo BASE_URL; ?>includes/imagenes/Aleph.jpg">
                 <input type="submit" value="Cerrar Sesion">
             </div>
             <div class="Info">

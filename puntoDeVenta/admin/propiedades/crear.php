@@ -1,10 +1,11 @@
 <?php
 require_once '../../includes/funciones.php';
-incluirTemplate('headerIframe');
-incluirTemplate("error");
-//Conexion a base de datos
+require_once "funcionesAdmin.php";
 require_once INCLUDES_URL . "/config/database.php";
-$db = conectarDB();
+$conexion = new connector;
+$db = $conexion->conectarDB(); // Obtener la conexión a la base de datos
+incluirTemplate("error");
+incluirTemplate("headerIframe");
 
 //Consulta de vendedores
 
@@ -34,13 +35,6 @@ $pais = "";
 //    echo "<pre>";
 //    var_dump($_POST);
 //    echo "</pre>";
-//    echo "<pre>";
-//    var_dump($_FILES);
-//    echo "</pre>";
-
-//TODO TEST SANITIZER
-// $var= filter_var($var,FILTER_SANITIZE_EMAIL);
-
 
 //Ejecución pos-formulario.
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -63,18 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fechaCreacion = mysqli_real_escape_string($db, date("Y-m-d"));
     $imagen = $_FILES['imagen'];
 
+
 //TODO visibilidad de SUPERGLOBAL $_FILE
 //    echo "<pre>";
 //    var_dump($imagen['size']);
 //    echo "</pre>";
+//
 
-
-    //TODO cambiar 'ADMINISTRADOR por $idPuesto'
-    $querySetUserData = "CALL AgregarUsuario('$nombreUsuario','$nombreCompleto','$apellidoMaterno','$apellidoPaterno','$contrasena','$calleNumero','$colonia'
-    ,'$codigoPostal','$municipioAlcaldia','$estado','$pais','Administrador','$correoElectronico')";
-
-    var_dump($querySetUserData);
-
+    $querySetUserData = "CALL AgregarUsuarioconID('$nombreUsuario','$nombreCompleto','$apellidoMaterno','$apellidoPaterno','$contrasena','$calleNumero','$colonia'
+    ,'$codigoPostal','$municipioAlcaldia','$estado','$pais','$idPuesto','$correoElectronico')";
 
 //Errores
     if (!$nombreCompleto) {
@@ -128,18 +119,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     if (empty($errors)) {
-        $insert = mysqli_query($db, $querySetUserData);
 
-        if ($insert) {
+        /* SUBIDA DE ARCHIVOS */
 
-            //TODO Cambiar redirección despues de completar la creacion
-            header("Location: ../../index.php");
+        cargarImagen($db, $querySetUserData, $imagen);
 
-        }
     } else {
 
         foreach ($errors as $error) {
-            echo "<pre>";
+            echo "
+<pre>";
             echo $error;
             echo "</pre>";
 
@@ -147,8 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
 
-}
-?>
+} ?>
+
 
 <main>
     <form method="POST" action="crear.php" enctype="multipart/form-data" class="formulario">
@@ -188,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </fieldset>
 
         <fieldset>
-                <legend>Información de domicilio</legend>
+            <legend>Información de domicilio</legend>
             <div class="contenedor-campos">
                 <div class="campos">
                     <label for="calleNumero">Calle y número exterior:</label>
@@ -221,37 +210,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <fieldset>
             <legend>Información de puesto</legend>
-                    <div class="campos">
-                        <label for="nombreUsuario">Nombre de usuario:</label>
-                        <input type="text" id="nombreUsuario" name="nombreUsuario" value=<?php echo $nombreUsuario ?>>
-                    </div>
-                    <div class="campos">
-                        <label for="contrasena">Contraseña:</label>
-                        <input type="password" id="contrasena" name="contrasena">
-                    </div>
-                    <div class="campos">
-                        <label>Puesto</label>
+            <div class="campos">
+                <label for="nombreUsuario">Nombre de usuario:</label>
+                <input type="text" id="nombreUsuario" name="nombreUsuario" value=<?php echo $nombreUsuario ?>>
+            </div>
+            <div class="campos">
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena">
+            </div>
+            <div class="campos">
+                <label>Puesto</label>
 
-                        <select name="idPuesto">
-                            <option>--Selecionar--</option>
-                            <?php
-                            while ($resultGetPuestos = mysqli_fetch_assoc($result)) { ?>
-                                <option <?php echo $idPuesto === $resultGetPuestos['idPuesto'] ? 'selected' : ''; ?>
+                <select name="idPuesto">
+                    <option>--Selecionar--</option>
+                    <?php
+                    while ($resultGetPuestos = mysqli_fetch_assoc($result)) { ?>
+                        <option <?php echo $idPuesto === $resultGetPuestos['idPuesto'] ? 'selected' : ''; ?>
 
-                                        value=<?php echo $resultGetPuestos['idPuesto'] ?>> <?php echo $resultGetPuestos['nombrePuesto'] ?> </option>
+                                value=<?php echo $resultGetPuestos['idPuesto'] ?>> <?php echo $resultGetPuestos['nombrePuesto'] ?> </option>
 
-                            <?php } ?>
+                    <?php } ?>
 
-                        </select>
-                    </div>
-                    <div class="campos">
-                        <label for="imagen">Imagen:</label>
-                        <input type="file" id="imagen" accept="image/jpeg , image/png" name="imagen">
-                    </div>
+                </select>
+            </div>
+            <div class="campos">
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" accept="image/jpeg , image/png" name="imagen">
+            </div>
         </fieldset>
 
-    <div class="input">
-        <input type="submit" value="Crear usuario">
-    </div>
+        <div class="input">
+            <input type="submit" value="Crear usuario">
+        </div>
     </form>
 </main>
+</body>

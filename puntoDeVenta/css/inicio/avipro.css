@@ -1,0 +1,93 @@
+:root{
+    --primario: #ff9800;
+    --primariooscuro: #f57c00;
+    --divisor: rgba(189, 189, 189, 0.27);
+    --blanco: #ffffff;
+    --oscuro: #212121;
+    --secundario: #0097a7;
+    --gris: rgba(107, 107, 107, 0.22);
+}
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+body{
+    font-size: 1.6rem;
+}
+
+*,*:before,*:after{
+    box-sizing: inherit;
+}
+
+textarea{
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-width:0px) {
+    .cen{
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+    .tabla{
+        width: 1000%;
+        text-align: center;
+        border: 0.2rem solid black;
+        border-radius: 0.5rem;
+        background-color: var(--divisor);
+    }
+    .tabla>caption{
+        font-size: 4rem;
+        border: 0.2rem solid black;
+    }
+    tr>th{
+        color: darkred;
+        font-size: 3.5rem;
+        padding: 1rem;
+        border-bottom: 0.2rem solid brown;
+    }
+    td{
+        padding: 1rem;
+        font-size: 2rem;
+    }
+    .der{
+        border-right: 0.2rem solid brown;
+    }
+}
+
+@media (min-width: 720px) {
+    .cen{
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+    .tabla{
+        width: 70%;
+        text-align: center;
+        border: 0.2rem solid black;
+        border-radius: 0.5rem;
+        background-color: var(--divisor);
+    }
+    .tabla>caption{
+        font-size: 4rem;
+        border: 0.2rem solid black;
+    }
+    tr>th{
+        color: darkred;
+        font-size: 3.5rem;
+        padding: 1rem;
+    }
+    td{
+        padding: 1rem;
+        font-size: 2rem;
+    }
+    .der{
+        border-right: 0.2rem solid brown;
+    }
+    .izq{
+        border-left: 0.2rem solid brown;
+    }
+}
+
+
