@@ -36,9 +36,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `b_abarrotes`.`correo_electronico`
+-- Table `b_abarrotes`.`correoelectronico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `b_abarrotes`.`correo_electronico` (
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`correoelectronico` (
   `idCorreo` VARCHAR(500) NOT NULL,
   `correoElectronico` VARCHAR(150) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`empresa` (
     REFERENCES `b_abarrotes`.`direccion` (`idDireccion`),
   CONSTRAINT `empresa_ibfk_2`
     FOREIGN KEY (`id_Correo`)
-    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correoelectronico` (`idCorreo`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -94,11 +94,11 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`proveedor` (
     REFERENCES `b_abarrotes`.`empresa` (`idEmpresa`),
   CONSTRAINT `proveedor_ibfk_2`
     FOREIGN KEY (`idCorreo`)
-    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correoelectronico` (`idCorreo`)
     ON DELETE CASCADE,
   CONSTRAINT `proveedor_ibfk_3`
     FOREIGN KEY (`idCorreo`)
-    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correoelectronico` (`idCorreo`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
   `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
   `idPuesto` VARCHAR(10) NOT NULL,
   `fechaCreacion` DATE NOT NULL,
-  `fecha_nacimiento` DATE NULL DEFAULT NULL,
+  `fechaNacimiento` DATE NULL DEFAULT NULL,
   `telefono` VARCHAR(15) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`),
   UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario` ASC) VISIBLE,
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
     REFERENCES `b_abarrotes`.`puesto` (`idPuesto`),
   CONSTRAINT `usuario_ibfk_3`
     FOREIGN KEY (`idCorreo`)
-    REFERENCES `b_abarrotes`.`correo_electronico` (`idCorreo`)
+    REFERENCES `b_abarrotes`.`correoelectronico` (`idCorreo`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -347,6 +347,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 USE `b_abarrotes` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `b_abarrotes`.`mostrar_usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`mostrar_usuario` (`NOMBRE_USUARIO` INT, `NOMBRE_COMPLETO` INT, `DIRECCION` INT, `CORREO_ELECTRONICO` INT, `FECHA_NACIMIENTO` INT, `TELEFONO` INT, `NOMBRE_CONTACTO` INT, `TELEFONO_CONTACTO` INT);
 
 -- -----------------------------------------------------
 -- procedure AgregarUsuario
@@ -463,6 +468,13 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- View `b_abarrotes`.`mostrar_usuario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `b_abarrotes`.`mostrar_usuario`;
+USE `b_abarrotes`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`P_VENTA`@`localhost` SQL SECURITY DEFINER VIEW `b_abarrotes`.`mostrar_usuario` AS select `us`.`nombreUsuario` AS `NOMBRE_USUARIO`,upper(concat(`us`.`nombreCompleto`,' ',`us`.`apellidoPaterno`,' ',`us`.`apellidoMaterno`)) AS `NOMBRE_COMPLETO`,upper(concat(`dir`.`calleNumero`,' ',`dir`.`colonia`,' ,',`dir`.`municipioAlcaldia`,' ',`dir`.`estado`,' CP:',`dir`.`codigoPostal`)) AS `DIRECCION`,`corr`.`correoElectronico` AS `CORREO_ELECTRONICO`,`us`.`fechaNacimiento` AS `FECHA_NACIMIENTO`,`us`.`telefono` AS `TELEFONO`,`telc`.`nombreContacto` AS `NOMBRE_CONTACTO`,`telc`.`telefono` AS `TELEFONO_CONTACTO` from (((`b_abarrotes`.`usuario` `us` join `b_abarrotes`.`direccion` `dir`) join `b_abarrotes`.`telefonocon` `telc`) join `b_abarrotes`.`correoelectronico` `corr`) where ((`us`.`idDireccion` = `dir`.`idDireccion`) and (`us`.`idCorreo` = `corr`.`idCorreo`) and (`us`.`idUsuario` = `telc`.`idUsuario`));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
