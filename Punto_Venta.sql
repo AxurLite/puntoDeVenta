@@ -401,12 +401,12 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure AgregarUsuarioconIDV2
+-- procedure AgregarUsuarioconID
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `b_abarrotes`$$
-CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `AgregarUsuarioconIDV2`(
+CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `AgregarUsuarioconID`(
     IN nombreUsuario1 varchar(150),
 	IN nombreCompleto1 varchar(80),	
 	IN apellidoPaterno1 varchar(80),
@@ -436,10 +436,10 @@ BEGIN
     set idCorreo1 = CONCAT('C',id_direccion1);
     set idContacto1 = CONCAT('C',id_direccion1);
     
-    INSERT INTO CORREO_ELECTRONICO (idCorreo,correoElectronico,fechaCreacion,fechaModificacion)
+    INSERT INTO CORREOELECTRONICO (idCorreo,correoElectronico,fechaCreacion,fechaModificacion)
 	VALUES (idCorreo1,correoElectronico1,SYSDATE(),SYSDATE());  
 	INSERT INTO USUARIO (idUsuario,nombreUsuario,nombreCompleto,apellidoMaterno,apellidoPaterno,contrasena,idDireccion
-    ,idCorreo,idPuesto,fechaCreacion,fecha_nacimiento,telefono) VALUES (id_direccion1,nombreUsuario1,nombreCompleto1,apellidoMaterno1,apellidoPaterno1,contrasena1,id_direccion1,
+    ,idCorreo,idPuesto,fechaCreacion,fechaNacimiento,telefono) VALUES (id_direccion1,nombreUsuario1,nombreCompleto1,apellidoMaterno1,apellidoPaterno1,contrasena1,id_direccion1,
     idCorreo1,idpuesto1,sysdate(),fecha_nacimiento1,telefono1);
 	INSERT INTO TELEFONOCON (idContacto,nombreContacto,telefono,fechaCreacion,prioridad
     ,idUsuario)
