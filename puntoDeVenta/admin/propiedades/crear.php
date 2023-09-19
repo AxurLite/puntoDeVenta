@@ -164,11 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label for="celular">Celular:</label>
                     <input type="tel" id="celular" name="celular">
                 </div>
-                <div class="campos">
-                    <label for="telefono">Telefono de emergencia:</label>
-                    <input type="tel" id="telefono" name="telefono">
-                </div>
-                <div class="campos correo">
+                <div class="campos ">
                     <label for="correoElectronico">Correo electronico:</label>
                     <input type="email"  id="correoElectronico" name="correoElectronico" placeholder="email@email.com"
                            value=<?php echo $correoElectronico ?>>

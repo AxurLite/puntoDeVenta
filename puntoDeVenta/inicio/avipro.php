@@ -15,14 +15,31 @@ incluirTemplate("headerIframe");
             <tr>
                 <td class="der">su ptm hoy tienes que recordar hacer limpieza</td>
                 <td class="izq">su ptm hoy hay Chevez 2x1 en todas las marcas</td>
+
             </tr>
 
+            <tr>
+                <td class="der">su ptm hoy tienes que recordar hacer limpieza</td>
+                <td class="izq">su ptm hoy hay Chevez 2x1 en todas las marcas</td>
+            </tr>
+            <tr>
+                <td class="der">su ptm hoy tienes que recordar hacer limpieza</td>
+                <td class="izq">su ptm hoy hay Chevez 2x1 en todas las marcas</td>
+            </tr>
+            <tr>
+                <td class="der">su ptm hoy tienes que recordar hacer limpieza</td>
+                <td class="izq">su ptm hoy hay Chevez 2x1 en todas las marcas</td>
+            </tr>
+            <tr>
+                <td class="der">su ptm hoy tienes que recordar hacer limpieza</td>
+                <td class="izq">su ptm hoy hay Chevez 2x1 en todas las marcas</td>
+            </tr>
         </table>
     </div>
 
     <form method="POST" action="avipro.php" enctype="multipart/form-data" class="formulario">
         <fieldset>
-            <legend>Información usuario</legend>
+            <legend>Mensajes</legend>
             <div class="contenedor-campos ">
                 <div class="campos">
                     <label>Avisos:</label>
@@ -35,7 +52,7 @@ incluirTemplate("headerIframe");
             </div>
         </fieldset>
         <div class="input">
-            <input type="submit" value="Crear usuario">
+            <input type="submit" value="Crear Avisos">
         </div>
     </form>
 </main>
