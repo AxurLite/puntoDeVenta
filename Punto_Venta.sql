@@ -351,7 +351,7 @@ USE `b_abarrotes` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `b_abarrotes`.`mostrar_usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `b_abarrotes`.`mostrar_usuario` (`ID_USUARIO` INT, `NOMBRE_USUARIO` INT, `NOMBRE_COMPLETO` INT, `DIRECCION` INT, `CORREO_ELECTRONICO` INT, `FECHA_NACIMIENTO` INT, `TELEFONO` INT, `NOMBRE_CONTACTO` INT, `TELEFONO_CONTACTO` INT);
+CREATE TABLE IF NOT EXISTS `b_abarrotes`.`mostrar_usuario` (`ID_USUARIO` INT, `NOMBREUSUARIO` INT, `NOMBRE` INT, `APELLIDOPATERNO` INT, `APELLIDOMATERNO` INT, `CALLENUMERO` INT, `COLONIA` INT, `MUNICIPIOALCALDIA` INT, `ESTADO` INT, `CP` INT, `CORREO_ELECTRONICO` INT, `FECHA_NACIMIENTO` INT, `TELEFONO` INT, `NOMBRE_CONTACTO` INT, `TELEFONO_CONTACTO` INT);
 
 -- -----------------------------------------------------
 -- procedure AgregarUsuario
@@ -474,7 +474,7 @@ DELIMITER ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `b_abarrotes`.`mostrar_usuario`;
 USE `b_abarrotes`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`P_VENTA`@`localhost` SQL SECURITY DEFINER VIEW `b_abarrotes`.`mostrar_usuario` AS select `us`.`idUsuario` AS `ID_USUARIO`,`us`.`nombreUsuario` AS `NOMBRE_USUARIO`,upper(concat(`us`.`nombreCompleto`,' ',`us`.`apellidoPaterno`,' ',`us`.`apellidoMaterno`)) AS `NOMBRE_COMPLETO`,upper(concat(`dir`.`calleNumero`,' ',`dir`.`colonia`,' ,',`dir`.`municipioAlcaldia`,' ',`dir`.`estado`,' CP:',`dir`.`codigoPostal`)) AS `DIRECCION`,`corr`.`correoElectronico` AS `CORREO_ELECTRONICO`,`us`.`fechaNacimiento` AS `FECHA_NACIMIENTO`,`us`.`telefono` AS `TELEFONO`,`telc`.`nombreContacto` AS `NOMBRE_CONTACTO`,`telc`.`telefono` AS `TELEFONO_CONTACTO` from (((`b_abarrotes`.`usuario` `us` join `b_abarrotes`.`direccion` `dir`) join `b_abarrotes`.`telefonocon` `telc`) join `b_abarrotes`.`correoelectronico` `corr`) where ((`us`.`idDireccion` = `dir`.`idDireccion`) and (`us`.`idCorreo` = `corr`.`idCorreo`) and (`us`.`idUsuario` = `telc`.`idUsuario`));
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`P_VENTA`@`localhost` SQL SECURITY DEFINER VIEW `b_abarrotes`.`mostrar_usuario` AS select `us`.`idUsuario` AS `ID_USUARIO`,`us`.`nombreUsuario` AS `NOMBREUSUARIO`,`us`.`nombreCompleto` AS `NOMBRE`,`us`.`apellidoPaterno` AS `APELLIDOPATERNO`,`us`.`apellidoMaterno` AS `APELLIDOMATERNO`,`dir`.`calleNumero` AS `CALLENUMERO`,`dir`.`colonia` AS `COLONIA`,`dir`.`municipioAlcaldia` AS `MUNICIPIOALCALDIA`,`dir`.`estado` AS `ESTADO`,`dir`.`codigoPostal` AS `CP`,`corr`.`correoElectronico` AS `CORREO_ELECTRONICO`,`us`.`fechaNacimiento` AS `FECHA_NACIMIENTO`,`us`.`telefono` AS `TELEFONO`,`telc`.`nombreContacto` AS `NOMBRE_CONTACTO`,`telc`.`telefono` AS `TELEFONO_CONTACTO` from (((`b_abarrotes`.`usuario` `us` join `b_abarrotes`.`direccion` `dir`) join `b_abarrotes`.`telefonocon` `telc`) join `b_abarrotes`.`correoelectronico` `corr`) where ((`us`.`idDireccion` = `dir`.`idDireccion`) and (`us`.`idCorreo` = `corr`.`idCorreo`) and (`us`.`idUsuario` = `telc`.`idUsuario`));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
