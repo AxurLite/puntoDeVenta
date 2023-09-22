@@ -51,6 +51,12 @@ textarea{
     margin: 1rem;
 }
 
+.area{
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgba(189, 189, 189, 0.23);
+}
+
 @media (min-width: 0px) {
     .cen{
         display: block;

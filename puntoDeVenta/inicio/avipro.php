@@ -43,11 +43,11 @@ incluirTemplate("headerIframe");
             <div class="contenedor-campos ">
                 <div class="campos">
                     <label>Avisos:</label>
-                    <textarea></textarea>
+                    <textarea class="area"></textarea>
                 </div>
                 <div class="campos">
                     <label>Promociones:</label>
-                    <textarea></textarea>
+                    <textarea class="area"></textarea>
                 </div>
             </div>
         </fieldset>
