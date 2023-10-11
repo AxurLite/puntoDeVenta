@@ -1,0 +1,109 @@
+:root{
+    --primario: #ff9800;
+    --primariooscuro: #f57c00;
+    --divisor: rgba(189, 189, 189, 0.27);
+    --blanco: #ffffff;
+    --oscuro: #212121;
+    --secundario: #0097a7;
+    --gris: rgba(107, 107, 107, 0.22);
+}
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+body{
+    font-size: 1.6rem;
+}
+
+*,*:before,*:after{
+    box-sizing: inherit;
+}
+
+textarea{
+    width: 100%;
+    height: 100%;
+}
+
+.edit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.edit>a{
+    padding: 0.5rem;
+    margin: 0.5rem;
+    background-color: #ff9800;
+    text-decoration: none;
+    color: var(--blanco);
+}
+.edit>a:hover{
+    background-color: #0097a7;
+}
+
+.lupahi{
+    display: none;
+}
+
+.show{
+    display:block;
+}
+.lupapa{
+    margin: 1rem;
+}
+
+.area{
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgba(189, 189, 189, 0.23);
+}
+
+@media (min-width: 0px) {
+    .cen{
+        display: block;
+        overflow: auto;
+        width: auto;
+        margin: 0 auto;
+        padding: 0.5rem;
+    }
+}
+
+@media (min-width: 720px) {
+    .cen{
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        padding: 1rem;
+    }
+
+}
+
+    .tabla{
+        margin: 0 auto;
+        text-align: center;
+        border: 0.2rem solid black;
+        border-radius: 0.5rem;
+        background-color: var(--divisor);
+    }
+    .tabla>caption{
+        font-size: 3rem;
+        border: 0.2rem solid black;
+    }
+    tr>th{
+        color: darkred;
+        font-size: 2.5rem;
+        padding: 1rem;
+        border-bottom: 0.2rem solid brown;
+    }
+    td{
+        font-size: 2rem;
+        padding: 0.5rem;
+    }
+    .der{
+        border-right: 0.2rem solid brown;
+    }
+    .izq{
+        border-left: 0.2rem solid brown;
+    }
+
+
+

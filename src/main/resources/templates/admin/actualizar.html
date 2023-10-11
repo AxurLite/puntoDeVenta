@@ -1,0 +1,282 @@
+<!--<?php-->
+<!--require_once '../../includes/funciones.php';-->
+<!--require_once "funcionesAdmin.php";-->
+<!--require_once INCLUDES_URL . "/config/database.php";-->
+<!--// Obtener la conexión a la base de datos-->
+<!--$conexion = new connector;-->
+<!--$db = $conexion->conectarDB();-->
+<!--incluirTemplate("error");-->
+<!--incluirTemplate("headerIframe");-->
+
+<!--//Validación de URL Correcto-->
+<!--$id = $_GET['id'];-->
+
+<!--$id = filter_var($id, FILTER_VALIDATE_INT);-->
+<!--if (!$id) {-->
+<!--    header('Location:/admin/propiedades/modificar.php');-->
+<!--}-->
+<!--//Obtener datos de vendedor-->
+<!--$queryGetUsuario = "SELECT * FROM mostrar_usuario WHERE idUsuario = '$id'";-->
+<!--$resultGetUsuario = mysqli_query($db, $queryGetUsuario);-->
+<!--$usuario = mysqli_fetch_assoc($resultGetUsuario);-->
+
+
+<!--//Consulta de vendedores-->
+<!--$queryGetVendedores = "SELECT * FROM puesto";-->
+
+<!--$result = mysqli_query($db, $queryGetVendedores);-->
+
+<!--//Arreglo con mensaje de errores.-->
+<!--$errors = [];-->
+
+
+<!--$nombreCompleto = $usuario['nombreCompleto'];-->
+<!--$apellidoPaterno = $usuario['apellidoPaterno'];-->
+<!--$apellidoMaterno = $usuario['apellidoMaterno'];-->
+<!--$nombreUsuario = $usuario['nombreUsuario'];-->
+<!--$contrasena = "";-->
+<!--$fechaNacimiento = $usuario['fechaNacimiento'];-->
+<!--$telefono = $usuario['telefono'];-->
+<!--$idPuesto = $usuario['idUsuario'];-->
+<!--$correoElectronico = $usuario['correoElectronico'];-->
+<!--$telefonoEmergencia = $usuario['telefonoContacto'];-->
+<!--$nombreEmergencia = $usuario['nombreContacto'];-->
+<!--$calleNumero = $usuario['calleNumero'];-->
+<!--$colonia = $usuario['colonia'];-->
+<!--$codigoPostal = $usuario['codigoPostal'];-->
+<!--$municipioAlcaldia = $usuario['municipioAlcaldia'];-->
+<!--$estado = $usuario['estado'];-->
+<!--$pais = $usuario['pais'];-->
+<!--$idPuesto = $usuario['idPuesto'];-->
+
+<!--//Ejecución pos-formulario.-->
+<!--if ($_SERVER["REQUEST_METHOD"] === "POST") {-->
+
+<!--    $nombreCompleto = mysqli_real_escape_string($db, strtoupper(trim($_POST["nombreCompleto"])));-->
+<!--    $apellidoPaterno = mysqli_real_escape_string($db, strtoupper(trim($_POST["apellidoPaterno"])));-->
+<!--    $apellidoMaterno = mysqli_real_escape_string($db, strtoupper(trim($_POST["apellidoMaterno"])));-->
+<!--    $nombreUsuario = mysqli_real_escape_string($db, trim($_POST["nombreUsuario"]));-->
+<!--    $contrasena = mysqli_real_escape_string($db, trim($_POST["contrasena"]));-->
+<!--    $idPuesto = mysqli_real_escape_string($db, $_POST["idPuesto"]);-->
+<!--    $correoElectronico = mysqli_real_escape_string($db, strtoupper(trim($_POST["correoElectronico"])));-->
+<!--    $fechaNacimiento = mysqli_real_escape_string($db, $_POST['fechaNacimiento']);-->
+<!--    $telefono = mysqli_real_escape_string($db, $_POST["telefono"]);-->
+
+<!--    $calleNumero = mysqli_real_escape_string($db, strtoupper(trim($_POST["calleNumero"])));-->
+<!--    $colonia = mysqli_real_escape_string($db, strtoupper(trim($_POST["colonia"])));-->
+<!--    $codigoPostal = mysqli_real_escape_string($db, strtoupper(trim($_POST["codigoPostal"])));-->
+<!--    $municipioAlcaldia = mysqli_real_escape_string($db, strtoupper(trim($_POST["municipioAlcaldia"])));-->
+<!--    $estado = mysqli_real_escape_string($db, strtoupper(trim($_POST["estado"])));-->
+<!--    $pais = mysqli_real_escape_string($db, strtoupper(trim($_POST["pais"])));-->
+<!--    $nombreEmergencia = mysqli_real_escape_string($db, strtoupper(trim($_POST["nombreEmergencia"])));-->
+<!--    $telefonoEmergencia = mysqli_real_escape_string($db, $_POST["telefonoEmergencia"]);-->
+<!--    $imagen = $_FILES['imagen'];-->
+
+<!--//TODO MODIFICAR USUARIO-->
+<!--    $querySetUserData = "CALL AgregarUsuarioconID('$nombreUsuario','$nombreCompleto','$apellidoMaterno','$apellidoPaterno','$contrasena','$calleNumero','$colonia'-->
+<!--    ,'$codigoPostal','$municipioAlcaldia','$estado','$pais','$idPuesto','$correoElectronico')";-->
+
+<!--//Errores-->
+<!--    if (!$nombreCompleto) {-->
+<!--        $errors[] = "Debes ingresar tu nombre completo.";-->
+<!--    }-->
+<!--    if (!$apellidoPaterno) {-->
+<!--        $errors[] = "Debes ingresar tu apellido paterno.";-->
+<!--    }-->
+<!--    if (!$apellidoMaterno) {-->
+<!--        $errors[] = "Debes ingresar tu apellido materno.";-->
+<!--    }-->
+<!--    if (!$nombreUsuario) {-->
+<!--        $errors[] = "Debes ingresar tu nombre de usuario.";-->
+<!--    }-->
+<!--    if (!$contrasena) {-->
+<!--        $errors[] = "Debes ingresar tu constraseña.";-->
+<!--    }-->
+<!--    if (!$correoElectronico) {-->
+<!--        $errors[] = "Debes ingresar tu correo electronico valido.";-->
+<!--    }-->
+<!--    if (!$idPuesto) {-->
+<!--        $errors[] = "Seleciona un puesto para el usuario.";-->
+<!--    }-->
+<!--    if (!$imagen['name'] || $imagen['error']) {-->
+<!--        $errors[] = "La imagen de usuario es requerida.";-->
+<!--    }-->
+<!--    if (!$calleNumero) {-->
+<!--        $errors[] = "Debes ingresar la información de tu domicilio.";-->
+<!--    }-->
+<!--    if (!$colonia) {-->
+<!--        $errors[] = "Debes ingresar el nombre tu colonia.";-->
+<!--    }-->
+<!--    if (!$codigoPostal) {-->
+<!--        $errors[] = "Debes ingresar tu código postal.";-->
+<!--    }-->
+<!--    if (!$municipioAlcaldia) {-->
+<!--        $errors[] = "Debes ingresar tu alcaldia.";-->
+<!--    }-->
+<!--    if (!$estado) {-->
+<!--        $errors[] = "Debes ingresar tu estado de residencia.";-->
+<!--    }-->
+<!--    if (!$pais) {-->
+<!--        $errors[] = "Debes ingresar tu pais de residencia.";-->
+<!--    }-->
+<!--    if (!$idPuesto) {-->
+<!--        $errors[] = "Seleciona un puesto para el usuario.";-->
+<!--    }-->
+<!--    if (!$telefonoEmergencia) {-->
+<!--        $errors[] = "Debes ingresar un numero de emergencia.";-->
+<!--    }-->
+<!--    if (!$nombreEmergencia) {-->
+<!--        $errors[] = "Debes ingresar un contacto de emergencia.";-->
+<!--    }-->
+<!--    if (!$fechaNacimiento) {-->
+<!--        $errors[] = "Ingresa tu fecha de nacimiento.";-->
+<!--    }-->
+<!--    if (!$telefono) {-->
+<!--        $errors[] = "Ingresa tu número de contacto.";-->
+<!--    }-->
+<!--    if ($imagen['size'] > 2000000) {-->
+<!--        $errors[] = "El tamaño de la imagen no puede ser mayor a 2 MB.";-->
+<!--    }-->
+
+<!--    if (empty($errors)) {-->
+
+<!--        /* SUBIDA DE ARCHIVOS */-->
+
+<!--        cargarImagen($db, $querySetUserData, $imagen);-->
+
+<!--    } else {-->
+
+<!--        foreach ($errors as $error) {-->
+<!--            echo "<pre>";-->
+<!--            echo $error;-->
+<!--            echo "</pre>";-->
+
+<!--        }-->
+<!--    }-->
+
+
+<!--} ?>-->
+<div th:insert="~{headerIframe.html}" th:remove="tag"></div>
+<header>
+    <h1>Actualizar usuario</h1>
+</header>
+
+<main>
+    <form method="POST" enctype="multipart/form-data" class="formulario">
+        <fieldset>
+            <legend>Información usuario</legend>
+            <div class="contenedor-campos">
+                <div class="campos">
+                    <label for="nombreCompleto">Nombre(s):</label>
+                    <input type="text" id="nombreCompleto" name="nombreCompleto" autocomplete="off"
+                           value=<?php echo $nombreCompleto ?>>
+                </div>
+                <div class="campos">
+                    <label for="apellidoPaterno">Apellido paterno:</label>
+                    <input type="text" id="apellidoPaterno" name="apellidoPaterno" autocomplete="off"
+                           value=<?php echo $apellidoPaterno ?>>
+                </div>
+                <div class="campos">
+                    <label for="apellidoMaterno">Apellido materno:</label>
+                    <input type="text" id="apellidoMaterno" name="apellidoMaterno" autocomplete="off"
+                           value=<?php echo $apellidoMaterno ?>>
+                </div>
+                <div class="campos">
+                    <label for="fechaNacimiento">Fecha nacimiento:</label>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" autocomplete="off"
+                           value=<?php echo $fechaNacimiento ?>>
+                </div>
+                <div class="campos">
+                    <label for="telefono">Celular:</label>
+                    <input type="tel" id="telefono" name="telefono" autocomplete="off" value=<?php echo $telefono ?>>
+                </div>
+                <div class="campos">
+                    <label for="telefonoEmergencia">Teléfono de emergencia:</label>
+                    <input type="tel" id="telefonoEmergencia" name="telefonoEmergencia" autocomplete="off"
+                           value=<?php echo $telefonoEmergencia ?>>
+                </div>
+                <div class="campos">
+                    <label for="nombreEmergencia">Contacto de emergencia:</label>
+                    <input type="text" id="nombreEmergencia" name="nombreEmergencia" autocomplete="off"
+                           value=<?php echo $nombreEmergencia ?>>
+                </div>
+                <div class="campos">
+                    <label for="correoElectronico">Correo electronico:</label>
+                    <input type="email" id="correoElectronico" name="correoElectronico" autocomplete="off"
+                           placeholder="email@email.com"
+                           value=<?php echo $correoElectronico ?>>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Información de domicilio</legend>
+            <div class="contenedor-campos">
+                <div class="campos">
+                    <label for="calleNumero">Calle y número exterior:</label>
+                    <input type="text" id="calleNumero" name="calleNumero" autocomplete="off"
+                           value=<?php echo $calleNumero ?>>
+                </div>
+                <div class="campos">
+                    <label for="colonia">Colonia:</label>
+                    <input type="text" id="colonia" name="colonia" autocomplete="off" value=<?php echo $colonia ?>>
+                </div>
+                <div class="campos">
+                    <label for="codigoPostal">Código postal:</label>
+                    <input type="text" id="codigoPostal" name="codigoPostal" autocomplete="off"
+                           value=<?php echo $codigoPostal ?>>
+                </div>
+                <div class="campos">
+                    <label for="municipioAlcaldia">Alcaldía:</label>
+                    <input type="text" id="municipioAlcaldia" name="municipioAlcaldia" autocomplete="off"
+                           value=<?php echo $municipioAlcaldia ?>>
+                </div>
+                <div class="campos">
+                    <label for="estado">Estado:</label>
+                    <input type="text" id="estado" name="estado" autocomplete="off" value=<?php echo $estado ?>>
+                </div>
+                <div class="campos">
+                    <label for="pais">País:</label>
+                    <input type="text" id="pais" name="pais" autocomplete="off" value=<?php echo $pais ?>>
+                </div>
+            </div>
+
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Información de puesto</legend>
+            <div class="campos">
+                <label for="nombreUsuario">Nombre de usuario:</label>
+                <input type="text" id="nombreUsuario" name="nombreUsuario" autocomplete="off"
+                       value=<?php echo $nombreUsuario ?>>
+            </div>
+            <div class="campos">
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" autocomplete="off">
+            </div>
+            <div class="campos">
+                <label>Puesto</label>
+
+                <select name="idPuesto">
+                    <option>--Selecionar--</option>
+                    <!--                    <?php-->
+                    <!--                    while ($resultGetPuestos = mysqli_fetch_assoc($result)) { ?>-->
+                    <!--                        <option <?php echo $idPuesto === $resultGetPuestos['idPuesto'] ? 'selected' : ''; ?>-->
+
+                    <!--                                value=<?php echo $resultGetPuestos['idPuesto'] ?>> <?php echo $resultGetPuestos['nombrePuesto'] ?> </option>-->
+
+                    <!--                    <?php } ?>-->
+
+                </select>
+            </div>
+            <div class="campos">
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" accept="image/jpeg , image/png" name="imagen">
+            </div>
+        </fieldset>
+
+        <div class="input">
+            <input type="submit" value="Crear usuario">
+        </div>
+    </form>
+</main>
