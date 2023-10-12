@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`direccion` (
   `pais` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`idDireccion`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 57
+AUTO_INCREMENT = 88
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
   `contrasena` VARCHAR(80) NULL DEFAULT NULL,
   `idDireccion` INT UNSIGNED NULL DEFAULT NULL,
   `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
-  `idPuesto` VARCHAR(10) NOT NULL,
+  `idPuesto` VARCHAR(10) NULL DEFAULT NULL,
   `fechaCreacion` DATE NOT NULL,
   `fechaNacimiento` DATE NULL DEFAULT NULL,
   `telefono` VARCHAR(15) NULL DEFAULT NULL,
@@ -244,7 +244,8 @@ CREATE TABLE IF NOT EXISTS `b_abarrotes`.`usuario` (
     REFERENCES `b_abarrotes`.`direccion` (`idDireccion`),
   CONSTRAINT `usuario_ibfk_2`
     FOREIGN KEY (`idPuesto`)
-    REFERENCES `b_abarrotes`.`puesto` (`idPuesto`),
+    REFERENCES `b_abarrotes`.`puesto` (`idPuesto`)
+    ON DELETE CASCADE,
   CONSTRAINT `usuario_ibfk_3`
     FOREIGN KEY (`idCorreo`)
     REFERENCES `b_abarrotes`.`correoelectronico` (`idCorreo`)
