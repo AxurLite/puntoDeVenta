@@ -55,20 +55,20 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `b_abarrotes`.`empresa` (
   `idEmpresa` INT NOT NULL,
   `nombreEmpresa` VARCHAR(150) NOT NULL,
-  `id_Direccion` INT UNSIGNED NULL DEFAULT NULL,
+  `idDireccion` INT UNSIGNED NULL DEFAULT NULL,
   `numTelefonico` INT NULL DEFAULT NULL,
-  `id_Correo` VARCHAR(500) NULL DEFAULT NULL,
+  `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
   `RFC` VARCHAR(30) NULL DEFAULT NULL,
   `sitioWeb` VARCHAR(100) NULL DEFAULT NULL,
   `fechaCreacion` DATE NOT NULL,
   PRIMARY KEY (`idEmpresa`),
-  INDEX `id_Direccion` (`id_Direccion` ASC) VISIBLE,
-  INDEX `id_Correo` (`id_Correo` ASC) VISIBLE,
+  INDEX `idDireccion` (`idDireccion` ASC) VISIBLE,
+  INDEX `idCorreo` (`idCorreo` ASC) VISIBLE,
   CONSTRAINT `empresa_ibfk_1`
-    FOREIGN KEY (`id_Direccion`)
+    FOREIGN KEY (`idDireccion`)
     REFERENCES `b_abarrotes`.`direccion` (`idDireccion`),
   CONSTRAINT `empresa_ibfk_2`
-    FOREIGN KEY (`id_Correo`)
+    FOREIGN KEY (`idCorreo`)
     REFERENCES `b_abarrotes`.`correoelectronico` (`idCorreo`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
@@ -502,6 +502,45 @@ BEGIN
 	'LAS PERITAS','52920','ATIZAPAN DE ZARAGOZA','México','México',
 	'VEN','ADRIAN_GARCIA@gmail.com','1973-01-04 00:00:00',
 	'0000 00000 00','1111 1111 11','LILIA HORTENSIA ARMENTA DOMINGUEZ');
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure AgregarEmpresa
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `b_abarrotes`$$
+CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `AgregarEmpresa`(
+    IN nombreEmpresa1 varchar(150),
+    IN numTelefonico1 int,
+    IN RFC1 VARCHAR(30),
+    IN sitioWeb1 VARCHAR(100),
+    IN calleNumero1 varchar(150),
+    IN colonia1 varchar(80),
+    IN codigoPostal1 varchar(10),
+    IN municipioAlcaldia1 varchar(80),
+    IN estado1 varchar(80),
+    IN pais1 varchar(50),
+    IN correoElectronico1 varchar(150)
+)
+BEGIN
+    DECLARE id_direccion1 INT;
+    DECLARE idCorreo1 VARCHAR(150);
+    
+	set id_direccion1 = LAST_INSERT_ID();
+    set idCorreo1 = CONCAT('C',id_direccion);
+    
+    INSERT INTO DIRECCION (calleNumero,colonia,codigoPostal,municipioAlcaldia,estado,pais)
+    VALUES (calleNumero1,colonia1,codigoPostal1,municipioAlcaldia1,estado1,pais1);
+    
+    INSERT INTO CORREO_ELECTRONICO (idCorreo,correoElectronico,fechaCreacion,fechaModificacion)
+    VALUES (idCorreo1,correoElectronico1,SYSDATE(),SYSDATE());
+    
+    INSERT INTO EMPRESA (idEmpresa,nombreEmpresa,idDireccion,numTelefonico,idCorreo,RFC
+    ,sitioWeb,fechaCreacion) VALUES (id_direccion1,nombreEmpresa1,id_direccion1,numTelefonico1,
+    idCorreo1,RFC1,sitioWeb1,sysdate());
 END$$
 
 DELIMITER ;
