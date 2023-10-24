@@ -1,0 +1,15 @@
+<?php
+require_once '../../includes/funciones.php';
+//Mensaje de confirmación
+
+$resultado = $_GET['resultado'] ?? null;
+
+?>
+    <p class="boton-amarillo">
+        <?php if ($resultado == 1) {
+            echo "Usuario creado correctamente";
+        } ?>
+    </p>
+
+
+<?php

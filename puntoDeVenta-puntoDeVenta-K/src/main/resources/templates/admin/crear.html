@@ -1,0 +1,287 @@
+<!--        /* SUBIDA DE ARCHIVOS */-->
+<!--function cargarImagen($db, $query, $imagen):-->
+<!--{-->
+<!--//Validacion dir imagenes-->
+<!--$carpetaImagenes = '../../includes/imagenes';-->
+
+<!--if (!is_dir($carpetaImagenes)) {-->
+<!--mkdir($carpetaImagenes);-->
+<!--}-->
+
+<!--//Generar nombre unico-->
+
+<!--$nombreImagen = md5(uniqid(rand(), true));-->
+
+<!--//Subir imagen-->
+
+<!--move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/$nombreImagen.jpg");-->
+
+
+<div th:insert="~{headerIframe.html}" th:remove="tag"></div>
+<header>
+    <h1 class="text-primary">Crear usuario</h1>
+
+</header>
+
+
+<main>
+
+        <form class="formulario" id="usuario" method="POST" th:object="${usuario}" action="/admin/crear" enctype="multipart/form-data">
+
+            <fieldset>
+
+                <legend class="text-secondary">Información del usuario</legend>
+                <div class="contenedor-campos">
+
+                    <div class="campos">
+                        <label for="nombreCompleto">Nombre(s):</label>
+                        <input class="form-control fs-5" type="text" id="nombreCompleto" name="nombreCompleto"
+                               autocomplete="off"
+                               th:field="${usuario.nombreCompleto}">
+
+                        <div class="alert alert-danger d-flex align-items-center" role="alert"
+                             th:if="${#fields.hasErrors('nombreCompleto')}" th:errors="*{nombreCompleto}">
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="apellidoPaterno">Apellido paterno:</label>
+                        <input class="form-control fs-5" type="text" id="apellidoPaterno" name="apellidoPaterno"
+                               autocomplete="off"
+                               th:field="${usuario.apellidoPaterno}">
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('apellidoPaterno')}"
+                             th:errors="*{apellidoPaterno}">
+
+                        </div>
+
+
+                    </div>
+
+                    <div class=" campos">
+                        <label for="apellidoMaterno">Apellido materno:</label>
+                        <input class="form-control fs-5" type="text" id="apellidoMaterno" name="apellidoMaterno"
+                               autocomplete="off"
+                               th:field="${usuario.apellidoMaterno}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('apellidoMaterno')}"
+                             th:errors="*{apellidoMaterno}">
+                            Error
+                        </div>
+
+                    </div>
+
+
+                    <div class=" campos">
+                        <label for="fechaNacimiento">Fecha nacimiento:</label>
+                        <input class="form-control fs-5" type="date" id="fechaNacimiento" name="fechaNacimiento"
+                               autocomplete="off"
+                               th:field="${usuario.fechaNacimiento}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('fechaNacimiento')}"
+                             th:errors="*{fechaNacimiento}">
+                            Error
+                        </div>
+
+                    </div>
+
+
+                    <div class=" campos">
+                        <label for="telefono">Celular:</label>
+                        <input class="form-control fs-5" type="tel" id="telefono" name="telefono" autocomplete="off"
+                               th:field="${usuario.telefono}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('telefono')}"
+                             th:errors="*{telefono}">Error
+                        </div>
+
+                    </div>
+
+
+                    <div class=" campos">
+                        <label for="telefonoEmergencia">Teléfono de emergencia:</label>
+                        <input class="form-control fs-5" type="tel" id="telefonoEmergencia" name="telefonoEmergencia"
+                               autocomplete="off">
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('telefonoEmergencia')}"-->
+                        <!--                         th:errors="*{telefonoEmergencia}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+                    <div class=" campos">
+                        <label for="nombreEmergencia">Contacto de emergencia:</label>
+                        <input class="form-control fs-5" type="text" id="nombreEmergencia" name="nombreEmergencia"
+                               autocomplete="off">
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('nombreEmergencia')}"-->
+                        <!--                         th:errors="*{'nombreEmergencia'}">Error-->
+                        <!--                    </div>-->
+                    </div>
+
+                    <div class=" campos">
+                        <label for="correoElectronicoDao">Correo electronico:</label>
+                        <!--                    <input class="form-control fs-5" type="email" id="correoElectronicoDao" name="correoElectronicoDao" autocomplete="off"-->
+                        <!--                           placeholder="email@email.com" th:field="*{correoElectronicoDao}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('correoElectronicoDao')}"-->
+                        <!--                         th:errors="*{correoElectronicoDao}">Error-->
+                        <!--                    </div>-->
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Información de domicilio</legend>
+                <div class="contenedor-campos">
+                    <div class="campos">
+                        <label for="calleNumero">Calle y número exterior:</label>
+                        <!--                    <input class="form-control fs-5" type="text" id="calleNumero" name="calleNumero" autocomplete="off"-->
+                        <!--                           th:field="${usuario.calleNumero}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('calleNumero')}"-->
+                        <!--                         th:errors="*{calleNumero}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="colonia">Colonia:</label>
+                        <!--                    <input class="form-control fs-5" type="text" id="colonia" name="colonia" autocomplete="off"-->
+                        <!--                           th:field="${usuario.colonia}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('colonia')}"-->
+                        <!--                         th:errors="*{colonia}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="codigoPostal">Código postal:</label>
+                        <!--                    <input class="form-control fs-5" type="text" id="codigoPostal" name="codigoPostal" autocomplete="off"-->
+                        <!--                           th:field="${usuario.codigoPostal}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('codigoPostal')}"-->
+                        <!--                         th:errors="*{codigoPostal}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="municipioAlcaldia">Alcaldía:</label>
+                        <!--                    <input class="form-control fs-5" type="text" id="municipioAlcaldia" name="municipioAlcaldia" autocomplete=" off"-->
+                        <!--                           th:field="${usuario.municipioAlcaldia}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('municipioAlcaldia')}"-->
+                        <!--                         th:errors="*{municipioAlcaldia}">Error-->
+                        <!--                    </div>-->
+                    </div>
+
+
+                    <div class="campos">
+                        <label>Estado:</label>
+                        <!--TODO VALIDAR ESTADOS Y PUESTO VACIOS-->
+
+                        <select class="form-select form-select-lg mb-3 fs-5" name="estado">
+                            <option>--Selecionar--</option>
+                            <!--                        <th:block th:each="puesto : ${listaPuesto}">-->
+                            <!--                            <option th:each="estado : ${estados}" th:value="${estado}" th:text="${estado}"></option>-->
+                            <!--                        </th:block>-->
+                        </select>
+
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('estado')}"-->
+                        <!--                         th:errors="*{estado}">Error-->
+                        <!--                    </div>-->
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="pais">Pais:</label>
+                        <!--                    <input class="form-control fs-5" type="text" id="pais" name="pais" autocomplete="off"-->
+                        <!--                           th:field="${usuario.pais}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('pais')}"-->
+                        <!--                         th:errors="*{pais}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Información de puesto</legend>
+                <div class="contenedor-campos">
+                    <div class="campos ext">
+                        <label for="nombreUsuario">Nombre de usuario:</label>
+                        <input class="form-control fs-5" type="text" id="nombreUsuario" name="nombreUsuario" autocomplete="off"
+                               th:field="${usuario.nombreUsuario}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}">
+                        </div>
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="contrasena">Contraseña:</label>
+                        <input class="form-control fs-5" type="password" id="contrasena" autocomplete="off" name="contrasena"
+                               th:field="${usuario.contrasena}">
+
+                        <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('contrasena')}"
+                             th:errors="*{contrasena}">
+                            Error
+                        </div>
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="confirmarContrasena">Confirmar Contraseña:</label>
+                        <input class="form-control fs-5" type="password" id="confirmarContrasena" autocomplete="off"
+                               name="confirmarContrasena">
+                        <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('contrasena')}"
+                             th:errors="*{confirmarContrasena}">
+                            Error
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label>Puesto</label>
+                        <select class="form-select form-select-lg mb-3 fs-5" id="puesto" name="puesto">
+                            <option>--Selecionar--</option>
+                            <!--                    <th:block th:each="puesto : ${listaPuesto}">-->
+                            <!--                        <option th:value="${puesto.idPuesto}" th:text="${puesto.nombrePuesto}"-->
+                            <!--                                th:selected="${puesto.idPuesto == idPuesto}"-->
+                            <!--                                th:field="${usuario.puesto.nombrePuesto}"></option>-->
+                            <!--                    </th:block>-->
+                        </select>
+                    </div>
+                    <div class="campos">
+                        <label for="imagen">Imagen:</label>
+                        <input class="form-control fs-5" type="file" id="imagen" accept="image/jpeg , image/png" name="imagen">
+                    </div>
+                </div>
+
+            </fieldset>
+                <input class="btn btn-primary enviar fs-3" style="font-weight: bold" type="submit" value="Crear usuario">
+        </form>
+
+</main>
+</body>
+</html>

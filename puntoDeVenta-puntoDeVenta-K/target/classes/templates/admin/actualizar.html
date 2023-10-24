@@ -1,0 +1,297 @@
+<!--        /* SUBIDA DE ARCHIVOS */-->
+<!--function cargarImagen($db, $query, $imagen):-->
+<!--{-->
+<!--//Validacion dir imagenes-->
+<!--$carpetaImagenes = '../../includes/imagenes';-->
+
+<!--if (!is_dir($carpetaImagenes)) {-->
+<!--mkdir($carpetaImagenes);-->
+<!--}-->
+
+<!--//Generar nombre unico-->
+
+<!--$nombreImagen = md5(uniqid(rand(), true));-->
+
+<!--//Subir imagen-->
+
+<!--move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/$nombreImagen.jpg");-->
+
+
+<div th:insert="~{headerIframe.html}" th:remove="tag"></div>
+<header>
+    <h1 class="text-primary">Actualizar usuario</h1>
+
+</header>
+
+
+<main>
+    <div class="container">
+        <form class="form" id="usuario
+" method="POST" th:object="${usuario}" action="/admin/crear" enctype="multipart/form-data">
+
+            <fieldset>
+
+                <legend class="text-secondary">Información del usuario</legend>
+                <div class="contenedor-campos">
+
+                    <div class="campos">
+                        <label for="nombreCompleto">Nombre(s):</label>
+                        <input class="form-control" type="text" id="nombreCompleto" name="nombreCompleto"
+                               autocomplete="off"
+                               th:field="${usuario.nombreCompleto}">
+
+                        <div class="alert alert-danger d-flex align-items-center" role="alert"
+                             th:if="${#fields.hasErrors('nombreCompleto')}" th:errors="*{nombreCompleto}">
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="apellidoPaterno">Apellido paterno:</label>
+                        <input class="form-control" type="text" id="apellidoPaterno" name="apellidoPaterno"
+                               autocomplete="off"
+                               th:field="${usuario.apellidoPaterno}">
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('apellidoPaterno')}"
+                             th:errors="*{apellidoPaterno}">
+
+                        </div>
+
+
+                    </div>
+
+                    <div class=" campos">
+                        <label for="apellidoMaterno">Apellido materno:</label>
+                        <input class="form-control" type="text" id="apellidoMaterno" name="apellidoMaterno"
+                               autocomplete="off"
+                               th:field="${usuario.apellidoMaterno}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('apellidoMaterno')}"
+                             th:errors="*{apellidoMaterno}">
+                            Error
+                        </div>
+
+                    </div>
+
+
+                    <div class=" campos">
+                        <label for="fechaNacimiento">Fecha nacimiento:</label>
+                        <input class="form-control" type="date" id="fechaNacimiento" name="fechaNacimiento"
+                               autocomplete="off"
+                               th:field="${usuario.fechaNacimiento}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('fechaNacimiento')}"
+                             th:errors="*{fechaNacimiento}">
+                            Error
+                        </div>
+
+                    </div>
+
+
+                    <div class=" campos">
+                        <label for="telefono">Celular:</label>
+                        <input class="form-control" type="tel" id="telefono" name="telefono" autocomplete="off"
+                               th:field="${usuario.telefono}">
+
+                        <div class="alert alert-danger d-flex align-items-center"
+                             th:If="${#fields.hasErrors('telefono')}"
+                             th:errors="*{telefono}">Error
+                        </div>
+
+                    </div>
+
+
+                    <div class=" campos">
+                        <label for="telefonoEmergencia">Teléfono de emergencia:</label>
+                        <input class="form-control" type="tel" id="telefonoEmergencia" name="telefonoEmergencia"
+                               autocomplete="off">
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('telefonoEmergencia')}"-->
+                        <!--                         th:errors="*{telefonoEmergencia}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+                    <div class=" campos">
+                        <label for="nombreEmergencia">Contacto de emergencia:</label>
+                        <input class="form-control" type="text" id="nombreEmergencia" name="nombreEmergencia"
+                               autocomplete="off">
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('nombreEmergencia')}"-->
+                        <!--                         th:errors="*{'nombreEmergencia'}">Error-->
+                        <!--                    </div>-->
+                    </div>
+
+                    <div class=" campos">
+                        <label for="correoElectronicoDao">Correo electronico:</label>
+                        <!--                    <input class="form-control" type="email" id="correoElectronicoDao" name="correoElectronicoDao" autocomplete="off"-->
+                        <!--                           placeholder="email@email.com" th:field="*{correoElectronicoDao}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('correoElectronicoDao')}"-->
+                        <!--                         th:errors="*{correoElectronicoDao}">Error-->
+                        <!--                    </div>-->
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Información de domicilio</legend>
+                <div class="contenedor-campos">
+                    <div class="campos">
+                        <label for="calleNumero">Calle y número exterior:</label>
+                        <!--                    <input class="form-control" type="text" id="calleNumero" name="calleNumero" autocomplete="off"-->
+                        <!--                           th:field="${usuario.calleNumero}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('calleNumero')}"-->
+                        <!--                         th:errors="*{calleNumero}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="colonia">Colonia:</label>
+                        <!--                    <input class="form-control" type="text" id="colonia" name="colonia" autocomplete="off"-->
+                        <!--                           th:field="${usuario.colonia}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('colonia')}"-->
+                        <!--                         th:errors="*{colonia}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="codigoPostal">Código postal:</label>
+                        <!--                    <input class="form-control" type="text" id="codigoPostal" name="codigoPostal" autocomplete="off"-->
+                        <!--                           th:field="${usuario.codigoPostal}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('codigoPostal')}"-->
+                        <!--                         th:errors="*{codigoPostal}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="municipioAlcaldia">Alcaldía:</label>
+                        <!--                    <input class="form-control" type="text" id="municipioAlcaldia" name="municipioAlcaldia" autocomplete=" off"-->
+                        <!--                           th:field="${usuario.municipioAlcaldia}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('municipioAlcaldia')}"-->
+                        <!--                         th:errors="*{municipioAlcaldia}">Error-->
+                        <!--                    </div>-->
+                    </div>
+
+
+                    <div class="campos">
+                        <label>Estado:</label>
+                        <!--TODO VALIDAR ESTADOS Y PUESTO VACIOS-->
+
+                        <select name="estado">
+                            <option>--Selecionar--</option>
+                            <!--                        <th:block th:each="puesto : ${listaPuesto}">-->
+                            <!--                            <option th:each="estado : ${estados}" th:value="${estado}" th:text="${estado}"></option>-->
+                            <!--                        </th:block>-->
+                        </select>
+
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('estado')}"-->
+                        <!--                         th:errors="*{estado}">Error-->
+                        <!--                    </div>-->
+                    </div>
+
+
+                    <div class="campos">
+                        <label for="pais">Pais:</label>
+                        <!--                    <input class="form-control" type="text" id="pais" name="pais" autocomplete="off"-->
+                        <!--                           th:field="${usuario.pais}">-->
+
+                        <!--                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('pais')}"-->
+                        <!--                         th:errors="*{pais}">Error-->
+                        <!--                    </div>-->
+
+                    </div>
+
+
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Información de puesto</legend>
+                <div class="campos">
+                    <label for="nombreUsuario">Nombre de usuario:</label>
+                    <input class="form-control" type="text" id="nombreUsuario" name="nombreUsuario" autocomplete="off"
+                           th:field="${usuario.nombreUsuario}">
+
+                    <div class="alert alert-danger d-flex align-items-center"
+                         th:If="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="icon icon-tabler icon-tabler-alert-hexagon-filled" width="44" height="44"
+                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M10.425 1.414a3.33 3.33 0 0 1 3.026 -.097l.19 .097l6.775 3.995l.096 .063l.092 .077l.107 .075a3.224 3.224 0 0 1 1.266 2.188l.018 .202l.005 .204v7.284c0 1.106 -.57 2.129 -1.454 2.693l-.17 .1l-6.803 4.302c-.918 .504 -2.019 .535 -3.004 .068l-.196 -.1l-6.695 -4.237a3.225 3.225 0 0 1 -1.671 -2.619l-.007 -.207v-7.285c0 -1.106 .57 -2.128 1.476 -2.705l6.95 -4.098zm1.585 13.586l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z"
+                                  stroke-width="0" fill="currentColor"/>
+                        </svg>
+                    </div>
+
+                </div>
+
+
+                <div class="campos">
+                    <label for="contrasena">Contraseña:</label>
+                    <input class="form-control" type="password" id="contrasena" autocomplete="off" name="contrasena"
+                           th:field="${usuario.contrasena}">
+
+                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('contrasena')}"
+                         th:errors="*{contrasena}">
+                        Error
+                    </div>
+
+                </div>
+
+
+                <div class="campos">
+                    <label for="confirmarContrasena">Confirmar Contraseña:</label>
+                    <input class="form-control" type="password" id="confirmarContrasena" autocomplete="off"
+                           name="confirmarContrasena">
+                    <!--                <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('confirmarContrasena')}"-->
+                    <!--                     th:errors="*{confirmarContrasena}">-->
+                    <!--                    Error-->
+                    <!--                </div>-->
+
+
+                </div>
+
+
+                <div class="campos">
+                    <label>Puesto</label>
+                    <select id="puesto" name="puesto">
+                        <option>--Selecionar--</option>
+                        <!--                    <th:block th:each="puesto : ${listaPuesto}">-->
+                        <!--                        <option th:value="${puesto.idPuesto}" th:text="${puesto.nombrePuesto}"-->
+                        <!--                                th:selected="${puesto.idPuesto == idPuesto}"-->
+                        <!--                                th:field="${usuario.puesto.nombrePuesto}"></option>-->
+                        <!--                    </th:block>-->
+                    </select>
+                </div>
+                <div class="campos">
+                    <label for="imagen">Imagen:</label>
+                    <input type="file" id="imagen" accept="image/jpeg , image/png" name="imagen">
+                </div>
+
+
+            </fieldset>
+
+            <div class="d-grid gap-2">
+                <input class="btn btn-primary" type="submit" value="Actualizar usuario">
+            </div>
+        </form>
+
+    </div>
+</main>
