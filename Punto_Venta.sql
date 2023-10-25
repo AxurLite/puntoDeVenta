@@ -82,10 +82,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `b_abarrotes`.`proveedor` (
   `idProveedor` INT NOT NULL AUTO_INCREMENT,
   `idEmpresa` INT NOT NULL,
-  `sitioWeb` VARCHAR(100) NULL DEFAULT NULL,
   `contactoProveedor` VARCHAR(50) NULL DEFAULT NULL,
   `idCorreo` VARCHAR(500) NULL DEFAULT NULL,
   `fechaCreacion` DATE NOT NULL,
+  `nombreProvedor` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`idProveedor`),
   INDEX `idEmpresa` (`idEmpresa` ASC) VISIBLE,
   INDEX `idCorreo` (`idCorreo` ASC) VISIBLE,
@@ -541,6 +541,28 @@ BEGIN
     INSERT INTO EMPRESA (idEmpresa,nombreEmpresa,idDireccion,numTelefonico,idCorreo,RFC
     ,sitioWeb,fechaCreacion) VALUES (id_direccion1,nombreEmpresa1,id_direccion1,numTelefonico1,
     idCorreo1,RFC1,sitioWeb1,sysdate());
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure AgregarProvedor
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `b_abarrotes`$$
+CREATE DEFINER=`P_VENTA`@`localhost` PROCEDURE `AgregarProvedor`(
+   in nombreProvedor1 varchar(150),
+   in empresa varchar(150),
+   in correoElectronico varchar(150),
+   in contacto varchar(50)
+)
+BEGIN
+	DECLARE idEmpresa1  INT;
+	SELECT idEmpresa INTO idEmpresa1 from EMPRESA where nombreEmpresa = empresa;
+    
+    INSERT INTO PROVEEDOR (idEmpresa,contactoProveedor,idCorreo,fechaCreacion,nombreProvedor)
+	VALUES (idEmpresa1,contacto,SYSDATE(),SYSDATE(),nombreProvedor1);
 END$$
 
 DELIMITER ;
