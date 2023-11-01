@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuariotest")
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
     @Serial
@@ -48,13 +49,20 @@ public class Usuario implements Serializable {
     @Size(min = 8, max = 80, message = "Tus contraseñas no coinciden.")
     private String confirmarContrasena;
 
-    private String idDireccion;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idDireccion")
+    private Direccion direccion;
 
-    private String idCorreo;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCorreo")
+    private CorreoElectronico correoElectronico;
 
-    private String idPuesto;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPuesto")
+    private Puesto puesto;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaCreacion;
 
     @PrePersist
@@ -70,43 +78,12 @@ public class Usuario implements Serializable {
     @Size(min = 10, max = 10, message = "Ingresa tu numero de teléfono a 10 digitos.")
     private String telefono;
 
+    private String foto;
 
-//
-//
-//    @Transient
-//    @Size(min = 2, max = 80, message = "Ingresa una colonia valida.")
-//    private String colonia;
-//    @Transient
-//    @Size(min = 5, max = 5, message = "Ingresa un codigo postal valido.")
-//    private String codigoPostal;
-//
-//    @Transient
-//    @Size(min = 2, max = 150, message = "Ingresa una calle de referencia.")
-//    private String calleNumero;
-//
-//    @Transient
-//    @Size(min = 2, max = 80, message = "Ingresa una alcaldía valida.")
-//    private String municipioAlcaldia;
-//
-//    @Transient
-//    @Size(min = 2, max = 80, message = "Ingresa un estado valido.")
-//    private String estado;
-//
-//    @Transient
-//    @Size(min = 2, max = 50, message = "Ingresa tu pais de residencia.")
-//    private String pais;
-//
-//    @Transient
-//    @NotEmpty(message = "Ingresa tu correo electronico.")
-//    private String correoElectronicoDao;
-//
-//    @Transient
-//    @Size(min = 10, max = 10, message = "Ingresa tu número de teléfono a 10 digitos.")
-//    private String telefonoEmergencia;
-//
-//    @Transient
-//// TODO   @Size(min = 10, max = 10, message = "Ingresa tu número de teléfono a 10 digitos.")
-//    private String nombreEmergencia;
+    @Size(min = 10, max = 10, message = "Ingresa el numero de teléfono a 10 digitos.")
+    private String telefonoEmergencia;
 
+    @Size(min = 2, max = 80, message = "Ingresa el nombre de tu contacto ante emergencias.")
+    private String nombreEmergencia;
 
 }

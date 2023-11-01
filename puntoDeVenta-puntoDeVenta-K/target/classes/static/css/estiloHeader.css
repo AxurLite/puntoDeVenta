@@ -1,13 +1,4 @@
 
-:root{
-    --primario: #ff9800;
-    --primariooscuro: #f57c00;
-    --divisor: rgba(189, 189, 189, 0.86);
-    --blanco: #ffffff;
-    --oscuro: #212121;
-    --secundario: #0097a7;
-    --gris: rgba(107, 107, 107, 0.22);
-}
 html{
     font-size: 62.5%;
     box-sizing: border-box;
@@ -16,34 +7,38 @@ html{
 *,*:before,*:after{
     box-sizing: inherit;
 }
-
+header{
+    margin-bottom: 2rem;
+}
 h1{
     text-align: center;
-
 }
 h2{
     text-align: center;
 }
+
+/* Aqui inicia la creacion de usuarios */
+
 
 .campos{
     font-size: 1.5rem;
 }
 
 .campos>label{
-    color: var(--oscuro);
+    color: black;
     font-weight: bold;
     margin-bottom: .5rem;
 }
 
 .campos>input{
-    padding: 0.8rem;
+    padding: 1rem;
     border: none;
     background-color: rgba(189, 189, 189, 0.23);
     border-radius: 0.5rem;
 }
 
 .campos>select{
-    padding: 1rem;
+    padding: 0.8rem;
 }
 
 .formulario{
@@ -69,15 +64,6 @@ legend{
     margin: 1rem 1rem;
 }
 
-.mensajerror{
-    background-color: rgba(244, 67, 54, 0.6); /* Color de fondo rojo */
-    color: white; /* Color de texto blanco */
-    border-radius: 0.5rem; /* Bordes redondeados */
-    width: 100%;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-}
-
 .enviar{
     margin-top: 1rem;
     margin-left: 1rem;
@@ -91,9 +77,16 @@ legend{
 
 
 
-
-
 /* Aqui inicia la tabla para el listado de lo usuarios */
+
+.ajuste{
+    width: 3%;
+
+}
+
+.naranja{
+    color: #f57c00;
+}
 
 @media (min-width: 0px) {
     .lupahi{
@@ -119,7 +112,7 @@ legend{
     .lista{
         font-size: 1.5rem;
         text-align: center;
-        vertical-align: center;
+
     }
 
     .edit>a{
@@ -129,6 +122,11 @@ legend{
     .reponsivo{
         overflow: auto;
         width: 100%;
+    }
+    .busqueda{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 }
 
@@ -143,7 +141,6 @@ legend{
     }
 
     .icon{
-        float: right;
         width: 2rem;
         height: 2rem;
     }
@@ -162,9 +159,16 @@ legend{
     .lista{
         font-size: 1.5rem;
         text-align: center;
+
     }
     .reponsivo{
         margin-top: 2rem;
+    }
+
+    .busqueda{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
 }
@@ -180,9 +184,8 @@ legend{
     }
 
     .icon{
-        float: right;
-        width: 3rem;
-        height: 3rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 
     .navegacion{
@@ -205,4 +208,18 @@ legend{
         margin-top: 2rem;
     }
 
+    .busqueda{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+}
+
+
+/* aqui inicia la pagina de avisos*/
+
+
+.campos>textarea{
+    background-color: rgba(189, 189, 189, 0.23);
 }

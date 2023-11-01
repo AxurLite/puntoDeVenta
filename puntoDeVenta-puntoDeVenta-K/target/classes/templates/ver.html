@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Título de tu página</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preload" href="/css/ver.css" as="style"/>
+    <link rel="stylesheet" href="/css/ver.css">
+</head>
+
+<body>
+<header>
+    <h1 class="text-primary" style="text-align: center">Informacion del Usuario</h1>
+</header>
+
+<a href="/admin/listar"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-up-left-double" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M19 18v-6a3 3 0 0 0 -3 -3h-7" />
+    <path d="M13 13l-4 -4l4 -4m-5 8l-4 -4l4 -4" />
+</svg></a>
+
+<div class="Content">
+    <div class="imagen">
+        <img th:if="${usuario.foto != null and #strings.length(usuario.foto) > 0}"
+             class="img-thumbnail"
+             th:src="@{'/imagenes/' + ${usuario.foto}}"/>
+    </div>
+
+    <div class="datos">
+        <div class="contenedor-campos">
+
+            <h2>Informacion personal</h2>
+
+            <div class="campos">
+                <label for="nombreCompleto">Nombre(s):</label>
+                <input class="form-control fs-5" type="text" id="nombreCompleto" name="nombreCompleto"
+                       autocomplete="off"
+                       th:field="${usuario.nombreCompleto}" readonly disabled>
+            </div>
+
+            <div class="campos">
+                <label for="apellidoPaterno">Apellido paterno:</label>
+                <input class="form-control fs-5" type="text" id="apellidoPaterno" name="apellidoPaterno"
+                       autocomplete="off"
+                       th:field="${usuario.apellidoPaterno}" readonly disabled>
+            </div>
+
+            <div class=" campos">
+                <label for="apellidoMaterno">Apellido materno:</label>
+                <input class="form-control fs-5" type="text" id="apellidoMaterno" name="apellidoMaterno"
+                       autocomplete="off"
+                       th:field="${usuario.apellidoMaterno}" readonly disabled>
+            </div>
+
+
+            <div class=" campos">
+                <label for="fechaNacimiento">Fecha nacimiento:</label>
+                <input class="form-control fs-5" type="date" id="fechaNacimiento" name="fechaNacimiento"
+                       autocomplete="off"
+                       th:field="${usuario.fechaNacimiento}" readonly disabled>
+            </div>
+
+
+            <div class=" campos">
+                <label for="telefono">Celular:</label>
+                <input class="form-control fs-5" type="tel" id="telefono" name="telefono" autocomplete="off"
+                       th:field="${usuario.telefono}" readonly disabled>
+            </div>
+
+
+            <div class=" campos">
+                <label for="telefonoEmergencia">Teléfono de emergencia:</label>
+                <input class="form-control fs-5" type="tel" id="telefonoEmergencia" name="telefonoEmergencia"
+                       autocomplete="off" th:text="${(usuario.telefonoEmergencia)}" readonly disabled>
+
+            </div>
+            <div class=" campos">
+                <label for="nombreEmergencia">Contacto de emergencia:</label>
+                <input class="form-control fs-5" type="text" id="nombreEmergencia" name="nombreEmergencia"
+                       autocomplete="off" readonly disabled th:text="${(usuario.nombreEmergencia)}">
+            </div>
+
+            <div class=" campos">
+                <label for="correoElectronicoDao">Correo electronico:</label>
+                <input class="form-control fs-5" type="email" id="correoElectronicoDao" name="correoElectronicoDao" autocomplete="off"
+                       placeholder="email@email.com" readonly disabled th:text="${(usuario.correoElectronico.getCorreoElectronico())}">
+            </div>
+        </div>
+
+        <div class="contenedor-campos">
+
+            <h2>Informacion personal</h2>
+
+            <div class="campos">
+                <label for="calleNumero">Calle y número exterior:</label>
+                <input class="form-control fs-5"
+                       type="text" id="calleNumero"
+                       name="calleNumero" autocomplete="off" readonly disabled th:text="${usuario.direccion.getCalleNumero()}">
+
+            </div>
+
+
+            <div class="campos">
+                <label for="colonia">Colonia:</label>
+                <input class="form-control fs-5" th:text="${usuario.direccion.getColonia()}"
+                       type="text" id="colonia" name="colonia" autocomplete="off" readonly disabled>
+
+            </div>
+
+
+            <div class="campos">
+                <label for="codigoPostal">Código postal:</label>
+                <input th:text="${usuario.direccion.getCodigoPostal()}"
+                       class="form-control fs-5" type="text" id="codigoPostal" name="codigoPostal" autocomplete="off" readonly disabled>
+            </div>
+
+
+            <div class="campos">
+                <label for="municipioAlcaldia">Alcaldía:</label>
+                <input th:text="${usuario.direccion.getColonia()}"
+                       class="form-control fs-5" type="text" id="municipioAlcaldia" name="municipioAlcaldia" autocomplete=" off" readonly disabled>
+            </div>
+
+
+            <div class="campos">
+                <label for="estado">Estado:</label>
+                <input th:text="${usuario.direccion.getEstado()}" class="form-control fs-5" type="text" id="estado" name="municipioAlcaldia" autocomplete=" off" readonly disabled>
+            </div>
+
+
+            <div class="campos">
+                <label for="pais">Pais:</label>
+                <input th:text="${usuario.direccion.getPais()}"
+                       class="form-control fs-5" type="text" id="pais" name="pais" autocomplete="off" readonly disabled>
+            </div>
+
+            <div class="campos ext">
+                <label for="nombreUsuario">Nombre de usuario:</label>
+                <input class="form-control fs-5" type="text" id="nombreUsuario" name="nombreUsuario"
+                       autocomplete="off"
+                       th:field="${usuario.nombreUsuario}" readonly disabled>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

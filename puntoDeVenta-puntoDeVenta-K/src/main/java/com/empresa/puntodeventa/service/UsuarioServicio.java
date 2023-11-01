@@ -11,10 +11,11 @@ public interface UsuarioServicio {
 
     public Page<Usuario> findAll(Pageable pageable);
 
-    public void saveUser(Usuario usuario);
+    public void saveUser(Usuario usuario) ;
 
     public Usuario findUser(Long idUsuario);
 
     public void deleteUser(Long idUsuario);
+
 }
 

@@ -30,8 +30,7 @@ public class UsuarioServicioImp implements UsuarioServicio {
 
     @Transactional
     @Override
-    public void saveUser(Usuario usuario) {
-        usuario.setNombreUsuario(usuario.getNombreUsuario().toUpperCase());
+    public void saveUser(Usuario usuario)  {
         usuario.setNombreCompleto(usuario.getNombreCompleto().toUpperCase());
         usuario.setApellidoMaterno(usuario.getApellidoMaterno().toUpperCase());
         usuario.setApellidoPaterno(usuario.getApellidoPaterno().toUpperCase());
@@ -49,4 +48,7 @@ public class UsuarioServicioImp implements UsuarioServicio {
     public void deleteUser(Long idUsuario) {
         usuarioDao.deleteById(idUsuario);
     }
+
+
+
 }

@@ -5,9 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,19 +19,26 @@ public class Puesto {
     @Column(name = "idPuesto", length = 10)
     private String idPuesto;
 
-//    @OneToMany(mappedBy = "puesto")
-//    private Set<Usuario> usuarios;
+    @OneToMany(mappedBy = "puesto")
+    private List<Usuario> usuarios;
 
     @Size(max = 150)
-    @NotNull
-    @Column(name = "nombrePuesto", nullable = false, length = 150)
+    @Column(name = "nombrePuesto", length = 150)
     private String nombrePuesto;
 
     @Size(max = 250)
     @Column(name = "descripcionPuesto", length = 250)
     private String descripcionPuesto;
 
-    @NotNull
-    @Column(name = "fechaCreacion", nullable = false)
-    private LocalDate fechaCreacion;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fechaCreacion")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaCreacion;
+
+    @PrePersist
+    public void prePersist() {
+        fechaCreacion = new Date();
+    }
+
+
 }
