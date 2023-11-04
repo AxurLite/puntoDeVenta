@@ -1,0 +1,37 @@
+/* Estilo de botón verde */
+.boton-amarillo {
+    background-color: #ff9800; /* Color de fondo verde */
+    color: white; /* Color de texto blanco */
+    padding: 0.5rem 2rem; /* Espaciado interno */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    font-size: 2rem; /* Tamaño de fuente */
+}
+
+/* Cambio de estilo al pasar el ratón */
+.boton-amarillo:hover {
+    background-color: #f57c00; /* Color de fondo verde más oscuro */
+}
+
+
+/* Estilo de botón rojo */
+.boton-rojo {
+    background-color: #f44336; /* Color de fondo rojo */
+    color: white; /* Color de texto blanco */
+    padding: 0.5rem 2rem; /* Espaciado interno */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    font-size: 2rem; /* Tamaño de fuente */
+}
+
+/* Cambio de estilo al pasar el ratón */
+.boton-rojo:hover {
+    background-color: #d32f2f; /* Color de fondo rojo más oscuro */
+}
+
+th,tr {
+    height: 4.2rem;
+    width: auto;
+}
