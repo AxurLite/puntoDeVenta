@@ -1,0 +1,43 @@
+:root{
+    --primario: #ff9800;
+    --primariooscuro: #f57c00;
+    --divisor: rgba(189, 189, 189, 0.27);
+    --blanco: #ffffff;
+    --oscuro: #212121;
+    --secundario: #0097a7;
+    --gris: rgba(107, 107, 107, 0.22);
+}
+
+textarea{
+    width: 100%;
+    height: 100%;
+}
+.area{
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgba(189, 189, 189, 0.23);
+}
+
+@media (min-width: 0px) {
+    .cen{
+        display: block;
+        overflow: auto;
+        width: auto;
+        margin: 0 auto;
+        padding: 0.5rem;
+    }
+}
+
+@media (min-width: 720px) {
+    .cen{
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        padding: 1rem;
+    }
+
+}
+
+
+
+
