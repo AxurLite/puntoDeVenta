@@ -1,9 +1,10 @@
-<div th:insert="~{headerIframe.html}" th:remove="tag"></div>
-<header>
-    <h1 class="text-primary">Crear usuario</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: head"></head>
+<body>
 
-</header>
-
+<header th:replace="layout :: header"></header>
+<header><h1 class="text-primary">Crear usuario</h1></header>
 
 <main>
 
@@ -221,7 +222,8 @@
                            name="contrasena"
                            th:field="${usuario.contrasena}">
 
-                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('contrasena') }"
+                    <div class="alert alert-danger d-flex align-items-center"
+                         th:If="${#fields.hasErrors('contrasena') }"
                          th:errors="*{contrasena}">Error
                     </div>
 
@@ -232,7 +234,8 @@
                     <label for="confirmarContrasena">Confirmar Contraseña:</label>
                     <input class="form-control fs-5" type="password" id="confirmarContrasena" autocomplete="off"
                            name="confirmarContrasena">
-                    <div class="alert alert-danger d-flex align-items-center" th:If="${#fields.hasErrors('confirmarContrasena')}"
+                    <div class="alert alert-danger d-flex align-items-center"
+                         th:If="${#fields.hasErrors('confirmarContrasena')}"
                          th:errors="*{confirmarContrasena}">
                         Error
                     </div>

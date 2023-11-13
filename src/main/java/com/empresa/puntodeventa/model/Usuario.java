@@ -5,8 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.executable.ValidateOnExecution;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
@@ -90,5 +89,6 @@ public class Usuario implements Serializable {
 
     @Size(min = 2, max = 80, message = "Ingresa el nombre de tu contacto ante emergencias.")
     private String nombreEmergencia;
+
 
 }

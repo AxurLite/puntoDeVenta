@@ -21,10 +21,6 @@ public class PrincipalController {
         return "avisos";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 
 
 }

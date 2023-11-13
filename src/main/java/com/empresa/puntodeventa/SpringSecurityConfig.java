@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
@@ -25,34 +26,33 @@ public class SpringSecurityConfig {
         manager.createUser(User
                 .withUsername("user")
                 .password(passwordEncoder().encode("user"))
-                .roles("USER")
+                .roles("Vendedor")
                 .build());
         manager.createUser(User
                 .withUsername("admin")
                 .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN", "USER")
+                .roles("Administrador", "Gerente","Vendedor")
                 .build());
 
         return manager;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/", "/css/**", "/js/**", "/imagenes/**").permitAll()
-                        .requestMatchers("/admin/crear/**").hasRole("ADMIN")
-                        .requestMatchers("/ver/**", "/admin/listar/**").permitAll()
-                        .requestMatchers("/factura/**").hasRole("USER")
-                        .requestMatchers("/admin/eliminar/**").permitAll()
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers( "/css/**", "/js/**", "/imagenes/**").permitAll()
+                        .requestMatchers("/eliminar/**", "/admin/crear/**", "/admin/listar/**").hasRole("Administrador")
+                        .requestMatchers("/ver/**").permitAll()
+                        .requestMatchers("/factura/**","/").hasRole("Vendedor")
                         .anyRequest().authenticated()
+                )
+                .formLogin(form -> form.loginPage("/login").permitAll())
+                .logout(withDefaults())
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
-                ).headers(headers -> headers
-                        .frameOptions(frameOptions -> frameOptions.sameOrigin()));
         return http.build();
-
     }
-
-
 }
+
+
